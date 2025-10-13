@@ -3,12 +3,15 @@
 class Fixed
 {
 	public:
-	Fixed();
-	Fixed(Fixed to_be_copied);
+	Fixed(); //default constructor
+	Fixed(const Fixed& to_be_copied); //copy constructor
+	Fixed& operator=(const Fixed& other); //copy assignment??
+	~Fixed(); //destructor
+
 	int getRawBits(void) const;
 	void setRawBits(int const raw);
 
 	private:
-	int before_decimal;
-	const static int after_decimal = 8;
-}
+	int _value;
+	const static int _bits = 8;
+};
