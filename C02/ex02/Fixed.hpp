@@ -9,6 +9,18 @@ class Fixed
 	Fixed(const int value);
 	Fixed(const float value);
 	Fixed& operator=(const Fixed& other);
+	bool operator>(const Fixed& other);
+	bool operator<(const Fixed& other);
+	bool operator>=(const Fixed& other);
+	bool operator<=(const Fixed& other);
+	bool operator==(const Fixed& other);
+	bool operator!=(const Fixed& other);
+
+	Fixed operator+(const Fixed& other);
+	Fixed operator-(const Fixed& other);
+	Fixed operator*(const Fixed& other);
+	Fixed operator/(const Fixed& other);
+
 	~Fixed();
 
 	int getRawBits(void) const;
