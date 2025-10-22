@@ -1,5 +1,5 @@
 NAME = Fixed
-SRC = Fixed.cpp Fixed2.cpp main.cpp
+SRC = Fixed.cpp main.cpp
 HDR = Fixed.hpp
 OBJS = $(SRC:.cpp=.o)
 

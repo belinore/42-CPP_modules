@@ -68,3 +68,122 @@ Fixed::~Fixed()
 {
 	std::cout << "Destructor called" <<std::endl;
 }
+
+/* ex02:
+Add public member functions to your class to overload the following operators:
+• The 6 comparison operators: >, <, >=, <=, ==, and !=.
+• The 4 arithmetic operators: +, -, *, and /.
+• The 4 increment/decrement (pre-increment and post-increment, pre-decrement and
+post-decrement) operators, which will increase or decrease the fixed-point value by
+the smallest representable ϵ, such that 1 + ϵ > 1.
+Add these four public overloaded member functions to your class:
+• A static member function min that takes two references to fixed-point numbers as
+parameters, and returns a reference to the smallest one.
+• A static member function min that takes two references to constant fixed-point
+numbers as parameters, and returns a reference to the smallest one.
+• A static member function max that takes two references to fixed-point numbers as
+parameters, and returns a reference to the greatest one.
+• A static member function max that takes two references to constant fixed-point
+numbers as parameters, and returns a reference to the greatest one.
+*/
+
+bool Fixed::operator>(const Fixed& other) const
+{
+	return (this->_value > other._value);
+}
+
+bool Fixed::operator<(const Fixed& other) const
+{
+	return (this->_value < other._value);
+}
+
+bool Fixed::operator>=(const Fixed& other) const
+{
+    return (this->_value >= other._value);
+}
+
+bool Fixed::operator<=(const Fixed& other) const
+{
+    return (this->_value <= other._value);
+}
+
+bool Fixed::operator==(const Fixed& other) const
+{
+    return (this->_value == other._value);
+}
+
+bool Fixed::operator!=(const Fixed& other) const
+{
+    return (this->_value != other._value);
+}
+
+Fixed Fixed::operator+(const Fixed& other)
+{
+    return (Fixed(this->toFloat() + other.toFloat()));
+}
+
+Fixed Fixed::operator-(const Fixed& other)
+{
+    return (Fixed(this->toFloat() - other.toFloat()));
+}
+
+Fixed Fixed::operator*(const Fixed& other)
+{
+    return (Fixed(this->toFloat() * other.toFloat()));
+}
+
+Fixed Fixed::operator/(const Fixed& other)
+{
+    return (Fixed(this->toFloat() / other.toFloat()));
+}
+
+Fixed& Fixed::operator++() //prefix
+{
+	this->_value++;
+    return (*this);
+}
+
+Fixed Fixed::operator++(int) //postfix
+{
+	Fixed temp(*this);
+	this->_value++;
+	return (temp);
+}
+
+Fixed& Fixed::operator--()
+{
+	this->_value--;
+	return (*this);
+}
+
+Fixed Fixed::operator--(int)
+{
+	Fixed temp(*this);
+	this->_value--;
+	return (temp);
+}
+
+Fixed& Fixed::min(Fixed& n1, Fixed& n2)
+{
+	if (n1 > n2)
+		return (n2);
+	return (n1);
+}
+Fixed& Fixed::max(Fixed& n1, Fixed& n2)
+{
+	if (n1 > n2)
+		return (n1);
+	return (n2);
+}
+const Fixed& Fixed::min(const Fixed& n1, const Fixed&n2)
+{
+	if (n1 > n2)
+		return (n2);
+	return (n1);
+}
+const Fixed& Fixed::max(const Fixed& n1, const Fixed&n2)
+{
+	if (n1 > n2)
+		return (n1);
+	return (n2);
+}
