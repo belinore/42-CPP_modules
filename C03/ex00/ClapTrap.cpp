@@ -14,6 +14,28 @@ ClapTrap::~ClapTrap()
 	std::cout << "Destructed: ClapTrap " << _name << std::endl;
 }
 
+ClapTrap::ClapTrap(const ClapTrap &other)
+{
+	_name = other._name;
+	_hitPoints = other._hitPoints;
+	_energyPoints = other._energyPoints;
+	_attackDamage = other._attackDamage;
+	std::cout << "Copy Constructed: ClapTrap " << _name << std::endl;
+}
+
+ClapTrap &ClapTrap::operator=(const ClapTrap &other)
+{
+	if (this != &other)
+	{
+		_name = other._name;
+		_hitPoints = other._hitPoints;
+		_energyPoints = other._energyPoints;
+		_attackDamage = other._attackDamage;
+	}
+	std::cout << "Copy Assigned: ClapTrap " << _name << std::endl;
+	return *this;
+}
+
 void ClapTrap::attack(const std::string& target)
 {
 	if (_hitPoints == 0)
