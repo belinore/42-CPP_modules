@@ -1,5 +1,5 @@
 NAME = Polymorphism
-SRC = main.cpp Animal.cpp Cat.cpp Dog.cpp
+SRC = main.cpp Animal.cpp Cat.cpp Dog.cpp WrongAnimal.cpp WrongCat.cpp
 HDR = Animal.hpp Cat.hpp Dog.hpp
 OBJS = $(SRC:.cpp=.o)
 
