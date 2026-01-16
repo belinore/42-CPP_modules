@@ -6,12 +6,13 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 16:15:00 by belinore          #+#    #+#             */
-/*   Updated: 2026/01/16 16:15:01 by belinore         ###   ########.fr       */
+/*   Updated: 2026/01/16 20:08:20 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <iomanip>
+#include <ctime>
 #include "Account.hpp"
 
 int Account::_nbAccounts = 0;
@@ -45,7 +46,8 @@ void	Account::displayAccountsInfos( void )
     return ;
 }
 
-Account::Account(void) : _accountIndex(0), _amount(0), _nbDeposits(0), _nbWithdrawals(0) {}
+Account::Account(void) 
+: _accountIndex(0), _amount(0), _nbDeposits(0), _nbWithdrawals(0) {}
 
 Account::Account(int initial_deposit)
 {
@@ -69,7 +71,7 @@ Account::~Account()
 
 void	Account::_displayTimestamp( void )
 {
-    std::time_t now = std::time(NULL);
+    std::time_t now = std::time(NULL);//not possible in c 98
     std::tm* localTime = std::localtime(&now);
 
 

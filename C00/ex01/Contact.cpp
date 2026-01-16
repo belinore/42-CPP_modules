@@ -6,15 +6,20 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 16:10:31 by belinore          #+#    #+#             */
-/*   Updated: 2026/01/16 16:10:33 by belinore         ###   ########.fr       */
+/*   Updated: 2026/01/16 18:25:49 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
 #include "Contact.hpp"
 
-Contact::Contact(std::string first_name, std::string last_name, std::string nickname, std::string phone_number, std::string darkest_secret)
-: _first_name(first_name), _last_name(last_name), _nickname(nickname), _phone_number(phone_number), _darkest_secret(darkest_secret) {}
+Contact::Contact() : _first_name(""), _last_name(""), _nickname(""),
+	_phone_number(""), _darkest_secret("") {}
+
+Contact::Contact(std::string first_name, std::string last_name,
+	std::string nickname, std::string phone_number, std::string darkest_secret)
+: _first_name(first_name), _last_name(last_name), _nickname(nickname),
+_phone_number(phone_number), _darkest_secret(darkest_secret) {}
 
 std::string Contact::get_first_name() const{ return _first_name; }
 
