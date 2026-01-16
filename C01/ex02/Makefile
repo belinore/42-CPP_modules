@@ -1,4 +1,4 @@
-NAME = brain
+NAME = ex02_brain
 SRC = main.cpp
 OBJS = $(SRC:.cpp=.o)
 

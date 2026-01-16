@@ -1,4 +1,4 @@
-NAME = attack
+NAME = ex03_attack
 SRC = main.cpp
 #HDR = Zombie.hpp
 OBJS = $(SRC:.cpp=.o)

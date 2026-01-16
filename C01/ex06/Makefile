@@ -1,4 +1,4 @@
-NAME = Harl
+NAME = ex06_Harl
 SRC = Harl.cpp main.cpp
 HDR = Harl.hpp
 OBJS = $(SRC:.cpp=.o)

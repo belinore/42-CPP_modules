@@ -1,4 +1,4 @@
-NAME = sed
+NAME = ex04_sed
 SRC = main.cpp
 HDR = sed.hpp
 OBJS = $(SRC:.cpp=.o)
