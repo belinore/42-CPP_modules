@@ -1,0 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Contact.cpp                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/16 16:10:31 by belinore          #+#    #+#             */
+/*   Updated: 2026/01/16 16:10:33 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "PhoneBook.hpp"
+#include "Contact.hpp"
+
+Contact::Contact(std::string first_name, std::string last_name, std::string nickname, std::string phone_number, std::string darkest_secret)
+: _first_name(first_name), _last_name(last_name), _nickname(nickname), _phone_number(phone_number), _darkest_secret(darkest_secret) {}
+
+std::string Contact::get_first_name() const{ return _first_name; }
+
+std::string Contact::get_last_name() const { return _last_name; }
+
+std::string Contact::get_nickname() const { return _nickname; }
+
+std::string Contact::get_number() const { return _phone_number; }
+
+std::string Contact::get_darkest_secret() const { return _darkest_secret; }

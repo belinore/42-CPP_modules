@@ -1,4 +1,17 @@
-#include "phonebook.hpp"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/16 16:10:42 by belinore          #+#    #+#             */
+/*   Updated: 2026/01/16 16:10:43 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "PhoneBook.hpp"
+#include "Contact.hpp"
 
 void    add_contact(PhoneBook *book)
 {
@@ -18,8 +31,12 @@ void    add_contact(PhoneBook *book)
     while (nickname.empty())
         std::getline(std::cin, nickname);
     std::cout << "Phone number: " << std::endl;
-    while (phone_number.empty())
-        std::getline(std::cin, phone_number);
+    while (phone_number.empty() || !is_numeric(phone_number))
+    {
+		std::getline(std::cin, phone_number);
+		if (!is_numeric(phone_number))
+			std::cout << "Error: must be numeric" << std::endl;
+	}
     std::cout << "Darkest secret: " << std::endl;
     while (secret.empty())
         std::getline(std::cin, secret);
@@ -42,10 +59,9 @@ void add_dummy_contacts(PhoneBook *book)
 
 int main()
 {
-    PhoneBook book;
+	PhoneBook book;
     std::string input;
 
-    std::cout << "Welcome to your new PhoneBook!"
     while (1)
     {
         std::cout << "\nSelect from the following: [1] ADD [2] SEARCH [3] EXIT" << std::endl;
