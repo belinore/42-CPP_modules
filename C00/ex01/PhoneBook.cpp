@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 16:10:49 by belinore          #+#    #+#             */
-/*   Updated: 2026/01/16 20:02:37 by belinore         ###   ########.fr       */
+/*   Updated: 2026/01/19 12:59:31 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void PhoneBook::print_contact_details(std::string &str_input)
 			break ;
 		std::cout << "Error: Input number between 0 and " << _total - 1 << std::endl;
 	}
+	if (!std::cin)
+		return ;
 	std::cout << "** Details for [" << selected_contact << "] **" << std::endl;
 	std::cout << "First Name: " << _contacts[selected_contact].get_first_name()
 	<< "\nLast Name: " << _contacts[selected_contact].get_last_name()

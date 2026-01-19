@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/16 16:10:42 by belinore          #+#    #+#             */
-/*   Updated: 2026/01/16 20:03:42 by belinore         ###   ########.fr       */
+/*   Updated: 2026/01/19 13:13:22 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int main()
     while (std::cin)
     {
         std::cout << "\nSelect from the following: [1] ADD [2] SEARCH [3] EXIT" << std::endl;
-        std::getline(std::cin, input);
+        if (!std::getline(std::cin, input))
+			break ;
         if (input == "ADD" || input == "1")
         {
             std::cout << "Adding contact..." << std::endl;
