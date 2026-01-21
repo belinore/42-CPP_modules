@@ -1,37 +1,5 @@
 #include "Fixed.hpp"
 
-std::ostream& operator<<(std::ostream& os, const Fixed& fixed_num)
-{
-	os << fixed_num.toFloat();
-	return (os);
-}
-
-int	Fixed::getRawBits(void) const
-{
-	return (_value);
-}
-
-void Fixed::setRawBits(int const raw)
-{
-	_value = raw;
-}
-
-float Fixed::toFloat(void) const
-{
-	float as_float;
-
-	as_float = (float)_value / (1 << _bits);
-	return (as_float);
-}
-	
-int	Fixed::toInt(void) const
-{
-	int	as_int;
-
-	as_int = _value >> _bits;
-	return (as_int);
-}
-
 Fixed::Fixed()
 {
 	std::cout << "Default constructor called" << std::endl;
@@ -61,7 +29,7 @@ Fixed::Fixed(const int value)
 Fixed::Fixed(const float value)
 {
 	std::cout << "Float constructor called" << std::endl;
-	_value = roundf(value * (1 << _bits));//to understand better!!!!!!!
+	_value = roundf(value * (1 << _bits));
 }
 
 Fixed::~Fixed()
@@ -69,22 +37,40 @@ Fixed::~Fixed()
 	std::cout << "Destructor called" <<std::endl;
 }
 
-/* ex02:
-Add public member functions to your class to overload the following operators:
-• The 6 comparison operators: >, <, >=, <=, ==, and !=.
-• The 4 arithmetic operators: +, -, *, and /.
-• The 4 increment/decrement (pre-increment and post-increment, pre-decrement and
-post-decrement) operators, which will increase or decrease the fixed-point value by
-the smallest representable ϵ, such that 1 + ϵ > 1.
-Add these four public overloaded member functions to your class:
-• A static member function min that takes two references to fixed-point numbers as
-parameters, and returns a reference to the smallest one.
-• A static member function min that takes two references to constant fixed-point
-numbers as parameters, and returns a reference to the smallest one.
-• A static member function max that takes two references to fixed-point numbers as
-parameters, and returns a reference to the greatest one.
-• A static member function max that takes two references to constant fixed-point
-numbers as parameters, and returns a reference to the greatest one.
+int	Fixed::getRawBits(void) const
+{
+	return (_value);
+}
+
+void Fixed::setRawBits(int const raw)
+{
+	_value = raw;
+}
+
+float Fixed::toFloat(void) const
+{
+	float as_float;
+
+	as_float = static_cast<float>(_value) / (1 << _bits);
+	return (as_float);
+}
+	
+int	Fixed::toInt(void) const
+{
+	int	as_int;
+
+	as_int = _value >> _bits;
+	return (as_int);
+}
+
+std::ostream& operator<<(std::ostream& os, const Fixed& fixed_num)
+{
+	os << fixed_num.toFloat();
+	return (os);
+}
+
+/* 
+ex02:
 */
 
 bool Fixed::operator>(const Fixed& other) const
@@ -119,31 +105,41 @@ bool Fixed::operator!=(const Fixed& other) const
 
 Fixed Fixed::operator+(const Fixed& other)
 {
-    return (Fixed(this->toFloat() + other.toFloat()));
+	Fixed result;
+	result.setRawBits(this->getRawBits() + other.getRawBits());
+	return (result);
 }
 
 Fixed Fixed::operator-(const Fixed& other)
 {
-    return (Fixed(this->toFloat() - other.toFloat()));
+	Fixed result;
+	result.setRawBits(this->getRawBits() - other.getRawBits());
+    return (result);
 }
 
 Fixed Fixed::operator*(const Fixed& other)
 {
-    return (Fixed(this->toFloat() * other.toFloat()));
+	Fixed result;
+    long temp = static_cast<long>(this->getRawBits() * other.getRawBits());
+	result.setRawBits(temp >> _bits);
+	return (result);
 }
 
 Fixed Fixed::operator/(const Fixed& other)
 {
-    return (Fixed(this->toFloat() / other.toFloat()));
+    Fixed result;
+	long temp = static_cast<long>(this->getRawBits() << _bits);
+	result.setRawBits(temp / other.getRawBits());
+	return (result);
 }
 
-Fixed& Fixed::operator++() //prefix
+Fixed& Fixed::operator++()
 {
 	this->_value++;
     return (*this);
 }
 
-Fixed Fixed::operator++(int) //postfix
+Fixed Fixed::operator++(int)
 {
 	Fixed temp(*this);
 	this->_value++;

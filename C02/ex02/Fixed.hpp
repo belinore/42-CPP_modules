@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Fixed.hpp                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/21 19:42:40 by belinore          #+#    #+#             */
+/*   Updated: 2026/01/21 19:42:41 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FIXED_HPP
 # define FIXED_HPP
 # include <iostream>
@@ -11,6 +23,8 @@ class Fixed
 	Fixed(const int value);
 	Fixed(const float value);
 	Fixed& operator=(const Fixed& other);
+	~Fixed();
+
 	bool operator>(const Fixed& other) const;
 	bool operator<(const Fixed& other) const;
 	bool operator>=(const Fixed& other) const;
@@ -32,9 +46,6 @@ class Fixed
 	static const Fixed& min(const Fixed& n1, const Fixed&n2);
 	static const Fixed& max(const Fixed& n1, const Fixed&n2);
 
-
-	~Fixed();
-
 	int getRawBits(void) const;
 	void setRawBits(int const raw);
 	float toFloat(void) const;
@@ -47,3 +58,6 @@ class Fixed
 
 std::ostream& operator<<(std::ostream& os, const Fixed& fixed_num);
 #endif
+
+//raw = real_value × 2^fractionalBits
+//if _bits = 8, raw = real_value × 256

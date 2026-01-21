@@ -1,6 +1,5 @@
 NAME = ex03_attack
-SRC = main.cpp
-#HDR = Zombie.hpp
+SRC = main.cpp HumanA.cpp HumanB.cpp Weapon.cpp
 OBJS = $(SRC:.cpp=.o)
 
 CC = c++
@@ -11,7 +10,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
-%.o: %.c
+%.o: %.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
