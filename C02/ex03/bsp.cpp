@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 18:37:49 by belinore          #+#    #+#             */
-/*   Updated: 2026/01/22 18:51:24 by belinore         ###   ########.fr       */
+/*   Updated: 2026/01/22 19:09:05 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,23 @@ Fixed area( Point const &a, Point const &b, Point const &c)
 //If point is on edge or vertex (area of any sub-triangle is 0), return false
 bool bsp( Point const a, Point const b, Point const c, Point const point)
 {
-	std::cout << "a is " << a << "\nb is " << b << "\nc is " << c 
-	          << "\npoint is " << point << std::endl;
 	Fixed area_abc = area(a, b, c);
 	Fixed area_pbc = area(point, b, c);
 	Fixed area_apc = area(a, point, c);
 	Fixed area_abp = area(a, b, point);
-	std::cout << "Area ABC: " << area_abc.toFloat()
-	<< "\nArea PBC: " << area_pbc.toFloat()
-	<< "\nArea APC: " << area_apc.toFloat()
-	<< "\nArea ABP: " << area_abp.toFloat() << std::endl;
-	Fixed sum = area_pbc + area_apc + area_abp;
-	std::cout << "Sum of areas PBC + APC + ABP: " << sum.toFloat() << std::endl;
+	Fixed sum_of_areas = area_pbc + area_apc + area_abp;
+	// std::cout << "a is " << a << "\nb is " << b << "\nc is " << c 
+	//           << "\npoint is " << point << std::endl;
+	// std::cout << "Area ABC: " << area_abc.toFloat()
+	// << "\nArea PBC: " << area_pbc.toFloat()
+	// << "\nArea APC: " << area_apc.toFloat()
+	// << "\nArea ABP: " << area_abp.toFloat() << std::endl;
+	// std::cout << "Sum of areas PBC + APC + ABP: "
+	//           << sum_of_areas.toFloat() << std::endl;
 	if (area_pbc == 0 || area_apc == 0 || area_abp == 0)
     	return false;
-	if (area_abc != area_pbc + area_apc + area_abp)
+	if (area_abc != sum_of_areas)
 		return (false);
 	return (true);
 }
+

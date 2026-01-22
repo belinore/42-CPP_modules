@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 18:43:16 by belinore          #+#    #+#             */
-/*   Updated: 2026/01/22 18:48:27 by belinore         ###   ########.fr       */
+/*   Updated: 2026/01/22 19:00:39 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ Point& Point::operator=(const Point& other)
 {
 	if (this != &other)
 	{
-		std::cerr << "\033[31m" << "Error: Cannot assign to const members _x and _y"
+		std::cerr << "\033[31m"
+		          << "Error: Cannot assign to const members _x and _y"
 		          << "\033[0m" << std::endl;
 	}
 	return (*this);
@@ -45,7 +46,8 @@ const Fixed& Point::getY() const
 
 std::ostream& operator<<(std::ostream& os, const Point& point)
 {
-	os << "(" << point.getX().toFloat() << ", " << point.getY().toFloat() << ")";
+	os << "(" << point.getX().toFloat()
+	   << ", " << point.getY().toFloat() << ")";
 	return (os);
 }
 
