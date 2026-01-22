@@ -1,7 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Animal.cpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/22 22:50:02 by belinore          #+#    #+#             */
+/*   Updated: 2026/01/22 22:50:02 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <ostream>
 #include "Animal.hpp"
 
-Animal::Animal() : Animal("Animal") {}
+Animal::Animal() : _type("Animal")
+{
+	std::cout << "Constructed: Animal" << std::endl;
+}
 
 Animal::Animal(const std::string &type) : _type(type)
 {

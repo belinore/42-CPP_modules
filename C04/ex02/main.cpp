@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/22 22:41:48 by belinore          #+#    #+#             */
+/*   Updated: 2026/01/22 22:41:49 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 # include "Animal.hpp"
 # include "Dog.hpp"
 # include "Cat.hpp"
@@ -15,7 +27,7 @@ int main()
 	// meta.printThoughts();
 	// std::cout << std::endl;
 
-	int totalAnimals = 10;
+	const int totalAnimals = 10;
 	const Animal* animals[totalAnimals];
 	int i = 0;
 	while (i < totalAnimals)
@@ -29,11 +41,11 @@ int main()
 		std::cout << std::endl;
 		animals[i]->makeSound();
 		std::string thought = "I am " + animals[i]->getType() + " number " + std::to_string(i);
-		//animals[i]->newThought(thought);
+		//animals[i]->newThought(thought); //works when Animal array is not const
 		animals[i]->printThoughts();
 	}
 	std::cout << std::endl;
 	for (int i = 0; i < 10; i++)
 		delete animals[i];
-	return 0;
+	return (0);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Cat.hpp                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/22 22:46:23 by belinore          #+#    #+#             */
+/*   Updated: 2026/01/22 22:46:24 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CAT_HPP
 # define CAT_HPP
 
@@ -12,9 +24,9 @@ class Cat : public Animal
 	Cat(const Cat &other);
 	Cat &operator=(const Cat &other);
 
-	void makeSound() const override;
-	void newThought(std::string text) override;
-	void printThoughts() const override;
+	void makeSound() const;
+	void newThought(std::string text);
+	void printThoughts() const;
 
 	private:
 	Brain *_brain;

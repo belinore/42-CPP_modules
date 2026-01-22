@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Animal.hpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/22 22:41:57 by belinore          #+#    #+#             */
+/*   Updated: 2026/01/22 22:45:31 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef ANIMAL_HPP
 # define ANIMAL_HPP
 
@@ -23,3 +35,7 @@ class Animal
 };
 
 #endif
+
+//by making makeSound a pure virtual function, Animal becomes abstract 
+//meaning that it cannot be instantiated directly and child classes must implement 
+//makeSound to be instantiable

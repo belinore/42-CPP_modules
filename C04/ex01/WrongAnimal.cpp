@@ -1,7 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   WrongAnimal.cpp                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/22 22:48:40 by belinore          #+#    #+#             */
+/*   Updated: 2026/01/22 22:49:07 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <ostream>
 #include "WrongAnimal.hpp"
 
-WrongAnimal::WrongAnimal() : WrongAnimal("WrongAnimal") {}
+WrongAnimal::WrongAnimal() : _type("WrongAnimal")
+{
+	std::cout << "Constructed: WrongAnimal" << std::endl;
+}
 
 WrongAnimal::WrongAnimal(const std::string &type) : _type(type)
 {
@@ -32,5 +47,5 @@ void WrongAnimal::makeSound() const
 
 std::string WrongAnimal::getType() const
 {
-	return _type;
+	return (_type);
 }

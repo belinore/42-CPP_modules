@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Dog.hpp                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/22 22:46:32 by belinore          #+#    #+#             */
+/*   Updated: 2026/01/22 22:46:33 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef DOG_HPP
 # define DOG_HPP
 
@@ -12,9 +24,9 @@ class Dog : public Animal
 	Dog(const Dog &other);
 	Dog &operator=(const Dog &other);
 
-	void makeSound() const override;
-	void newThought(std::string text) override;
-	void printThoughts() const override;
+	void makeSound() const;
+	void newThought(std::string text);
+	void printThoughts() const;
 
 	private:
 	Brain *_brain;
