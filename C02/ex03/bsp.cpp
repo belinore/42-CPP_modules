@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   bsp.cpp                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/22 18:37:49 by belinore          #+#    #+#             */
+/*   Updated: 2026/01/22 18:51:24 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Point.hpp"
 #include "Fixed.hpp"
 #include <iostream>
@@ -19,7 +31,8 @@ Fixed area( Point const &a, Point const &b, Point const &c)
 //If point is on edge or vertex (area of any sub-triangle is 0), return false
 bool bsp( Point const a, Point const b, Point const c, Point const point)
 {
-	std::cout << "a is " << a << "\nb is " << b << "\nc is " << c << "\npoint is " << point << std::endl;
+	std::cout << "a is " << a << "\nb is " << b << "\nc is " << c 
+	          << "\npoint is " << point << std::endl;
 	Fixed area_abc = area(a, b, c);
 	Fixed area_pbc = area(point, b, c);
 	Fixed area_apc = area(a, point, c);
