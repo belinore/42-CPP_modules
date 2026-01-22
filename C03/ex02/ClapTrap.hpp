@@ -1,19 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ClapTrap.hpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/22 19:56:16 by belinore          #+#    #+#             */
+/*   Updated: 2026/01/22 19:56:17 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef ClapTrap_HPP
 # define ClapTrap_HPP
 
 # include <iostream>
 
-//copy constructor - creates a new object as a copy of an existing object
-//copy assignment operator - assigns the values from one existing object to another existing object.
-//const at start means the return value is const, at end means the method does not modify the object
+
 class ClapTrap
 {
 	public:
-	ClapTrap(const std::string &name); //constructor
-	ClapTrap(const std::string &name, int hitPoints, int energyPoints, int attackDamage); //parameterized constructor
-	~ClapTrap(); //destructor
-	ClapTrap(const ClapTrap &other); //copy constructor
-	ClapTrap &operator=(const ClapTrap &other); //copy assignment operator
+	ClapTrap(const std::string &name);
+	ClapTrap(const std::string &name, int hitPoints,
+	         int energyPoints, int attackDamage);
+	~ClapTrap();
+	ClapTrap(const ClapTrap &other);
+	ClapTrap &operator=(const ClapTrap &other);
 	
 	void attack(const std::string& target);
 	void takeDamage(unsigned int amount);

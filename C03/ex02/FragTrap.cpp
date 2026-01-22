@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   FragTrap.cpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/22 19:56:22 by belinore          #+#    #+#             */
+/*   Updated: 2026/01/22 19:57:50 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ClapTrap.hpp"
 #include "FragTrap.hpp"
 
@@ -16,7 +28,7 @@ FragTrap::FragTrap(const FragTrap &other) : ClapTrap(other)
 
 FragTrap &FragTrap::operator=(const FragTrap &other)
 {
-	if (this != &other)//q: is "this" a pointer address //a:
+	if (this != &other)
 	{
 		ClapTrap::operator=(other);
 	}
@@ -28,8 +40,10 @@ void FragTrap::highFivesGuys(void)
 {
 	if (getHitPoints() < 0)
 	{
-		std::cout << "Fragtrap " << getName() << " is dead and cannot request a high five!" << std::endl;
+		std::cout << "Fragtrap " << getName()
+		          << " is dead and cannot request a high five!" << std::endl;
 		return ;
 	}
-	std::cout << "Fragtrap " << getName() << " requests a high five!" << std::endl;
+	std::cout << "Fragtrap " << getName()
+	          << " requests a high five!" << std::endl;
 }
