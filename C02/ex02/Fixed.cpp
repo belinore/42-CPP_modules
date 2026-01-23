@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Fixed.cpp                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/23 12:51:33 by belinore          #+#    #+#             */
+/*   Updated: 2026/01/23 14:48:39 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Fixed.hpp"
 
 Fixed::Fixed()
@@ -120,7 +132,7 @@ Fixed Fixed::operator-(const Fixed& other)
 Fixed Fixed::operator*(const Fixed& other)
 {
 	Fixed result;
-    long temp = static_cast<long>(this->getRawBits() * other.getRawBits());
+    long temp = static_cast<long>(this->getRawBits()) * other.getRawBits();
 	result.setRawBits(temp >> _bits);
 	return (result);
 }
@@ -128,7 +140,7 @@ Fixed Fixed::operator*(const Fixed& other)
 Fixed Fixed::operator/(const Fixed& other)
 {
     Fixed result;
-	long temp = static_cast<long>(this->getRawBits() << _bits);
+	long temp = static_cast<long>(this->getRawBits()) << _bits;
 	result.setRawBits(temp / other.getRawBits());
 	return (result);
 }
