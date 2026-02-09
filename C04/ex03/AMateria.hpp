@@ -1,9 +1,11 @@
 #ifndef AMATERIA_HPP
+# define AMATERIA_HPP
 
 #include <string>
 #include <iostream>
-#include "ICharacter.hpp"
+class ICharacter;
 
+// The AMateria class serves as an abstract base class for different types of magical materia.
 class AMateria
 {
 	protected:
@@ -16,7 +18,7 @@ class AMateria
 	virtual ~AMateria();
 
 	std::string const &getType() const; //Returns the materia type
-	virtual AMateria* clone() const = 0;
+	virtual AMateria* clone() const = 0; 
 	virtual void use(ICharacter& target);
 };
 
