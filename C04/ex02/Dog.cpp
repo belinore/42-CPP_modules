@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:46:28 by belinore          #+#    #+#             */
-/*   Updated: 2026/01/22 22:46:29 by belinore         ###   ########.fr       */
+/*   Updated: 2026/02/09 17:50:49 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,3 +57,4 @@ void Dog::printThoughts() const
 {
 	_brain->printThoughts();
 }
+

@@ -6,16 +6,15 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:50:45 by belinore          #+#    #+#             */
-/*   Updated: 2026/02/09 14:29:59 by belinore         ###   ########.fr       */
+/*   Updated: 2026/02/09 16:07:51 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "WrongCat.hpp"
 #include "WrongAnimal.hpp"
 
-WrongCat::WrongCat()
+WrongCat::WrongCat() : WrongAnimal("WrongCat")
 {
-	_type = "WrongCat";
 	std::cout << "Constructed: WrongCat" << std::endl;
 }
 

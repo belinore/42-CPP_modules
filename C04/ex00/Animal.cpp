@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:50:02 by belinore          #+#    #+#             */
-/*   Updated: 2026/02/09 14:32:38 by belinore         ###   ########.fr       */
+/*   Updated: 2026/02/09 16:59:12 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 #include "Animal.hpp"
 
 Animal::Animal() : _type("GenericAnimal")
+{
+	std::cout << "Constructed: Animal" << std::endl;
+}
+
+Animal::Animal(const std::string &type) : _type(type)
 {
 	std::cout << "Constructed: Animal" << std::endl;
 }
@@ -43,5 +48,5 @@ void Animal::makeSound() const
 
 std::string Animal::getType() const
 {
-	return _type;
+	return (_type);
 }

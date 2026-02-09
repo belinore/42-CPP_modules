@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 13:18:04 by belinore          #+#    #+#             */
-/*   Updated: 2026/02/09 13:18:05 by belinore         ###   ########.fr       */
+/*   Updated: 2026/02/09 18:10:03 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 MateriaSource::MateriaSource() : _count(0)
 {
 	for (int i = 0; i < 4; i++)
-		_inventory[i] = nullptr;
+		_inventory[i] = NULL;
 	std::cout << "Constructed: MateriaSource" <<  std::endl;
 }
 
@@ -36,7 +36,7 @@ MateriaSource::MateriaSource(const MateriaSource &other) : _count(other._count)
 		if (other._inventory[i])
 			_inventory[i] = other._inventory[i]->clone();
 		else
-			_inventory[i] = nullptr;
+			_inventory[i] = NULL;
 	}
 	std::cout << "Copy Constructed: MateriaSource" <<  std::endl;
 }
@@ -53,7 +53,7 @@ MateriaSource &MateriaSource::operator=(const MateriaSource &other)
 			if (other._inventory[i])
 				_inventory[i] = other._inventory[i]->clone();
 			else
-				_inventory[i] = nullptr;
+				_inventory[i] = NULL;
 		}
 	}
 	std::cout << "Copy Assigned: MateriaSource" <<  std::endl;
@@ -86,5 +86,5 @@ AMateria* MateriaSource::createMateria(std::string const &type)
 		}
 	}
 	std::cout << "Materia of type " << type << " not found!" << std::endl;
-	return (nullptr);
+	return (NULL);
 }

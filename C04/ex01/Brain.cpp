@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:47:43 by belinore          #+#    #+#             */
-/*   Updated: 2026/01/22 22:47:44 by belinore         ###   ########.fr       */
+/*   Updated: 2026/02/09 18:03:36 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ Brain &Brain::operator=(const Brain &other)
 
 void Brain::newThought(std::string text)
 {
-	std::string *thought = new std::string(text);
+	std::string thought = std::string(text);
 	int i = 0;
 	while (i < BRAIN_SIZE && !ideas[i].empty())
 		i++;
 	if (i < BRAIN_SIZE - 1)
-		ideas[i] = *thought;
+		ideas[i] = thought;
 	else
 		std::cout << "Brain is full of thoughts!" << std::endl;
 }

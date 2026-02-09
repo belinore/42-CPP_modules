@@ -6,16 +6,15 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:50:17 by belinore          #+#    #+#             */
-/*   Updated: 2026/02/09 14:30:21 by belinore         ###   ########.fr       */
+/*   Updated: 2026/02/09 15:53:39 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Dog.hpp"
 #include "Animal.hpp"
 
-Dog::Dog()
+Dog::Dog() : Animal("Dog")
 {
-	_type = "Dog";
 	std::cout << "Constructed: Dog" << std::endl;
 }
 

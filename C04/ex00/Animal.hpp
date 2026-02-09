@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:50:05 by belinore          #+#    #+#             */
-/*   Updated: 2026/02/09 14:32:43 by belinore         ###   ########.fr       */
+/*   Updated: 2026/02/09 15:54:51 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ class Animal
 {
 	public:
 	Animal();
+	Animal(const std::string &type);
 	virtual ~Animal();
 	Animal(const Animal &other);
 	Animal &operator=(const Animal &other);

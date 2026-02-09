@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:50:38 by belinore          #+#    #+#             */
-/*   Updated: 2026/02/09 14:33:30 by belinore         ###   ########.fr       */
+/*   Updated: 2026/02/09 16:07:15 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 #include "WrongAnimal.hpp"
 
 WrongAnimal::WrongAnimal() : _type("WrongAnimal")
+{
+	std::cout << "Constructed: WrongAnimal" << std::endl;
+}
+
+WrongAnimal::WrongAnimal(const std::string &type) : _type(type)
 {
 	std::cout << "Constructed: WrongAnimal" << std::endl;
 }

@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:50:41 by belinore          #+#    #+#             */
-/*   Updated: 2026/02/09 14:33:35 by belinore         ###   ########.fr       */
+/*   Updated: 2026/02/09 16:07:34 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ class WrongAnimal
 {
 	public:
 	WrongAnimal();
+	WrongAnimal(const std::string &type);
 	virtual ~WrongAnimal();
 	WrongAnimal(const WrongAnimal &other);
 	WrongAnimal &operator=(const WrongAnimal &other);

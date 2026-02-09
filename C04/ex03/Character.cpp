@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 13:17:33 by belinore          #+#    #+#             */
-/*   Updated: 2026/02/09 13:17:34 by belinore         ###   ########.fr       */
+/*   Updated: 2026/02/09 18:09:23 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 Character::Character() : _name("Default")
 {
 	for (int i = 0; i < 4; i++)
-		_inventory[i] = nullptr;
+		_inventory[i] = NULL;
 	std::cout << "Constructed: Character " << _name << std::endl;
 }
 
 Character::Character(const std::string &name) : _name(name)
 {
 	for (int i = 0; i < 4; i++)
-		_inventory[i] = nullptr;
+		_inventory[i] = NULL;
 	std::cout << "Constructed: Character " << _name << std::endl;
 
 }
@@ -46,7 +46,7 @@ Character::Character(const Character &other) : _name(other._name)
 		if (other._inventory[i])
 			_inventory[i] = other._inventory[i]->clone();
 		else
-			_inventory[i] = nullptr;
+			_inventory[i] = NULL;
 	}
 	std::cout << "Copy Constructed: Character " << _name << std::endl;
 }
@@ -63,7 +63,7 @@ Character &Character::operator=(const Character &other)
 			if (other._inventory[i])
 				_inventory[i] = other._inventory[i]->clone();
 			else
-				_inventory[i] = nullptr;
+				_inventory[i] = NULL;
 		}
 	}
 	std::cout << "Copy Assigned: Character " << _name << std::endl;
@@ -79,14 +79,16 @@ void Character::equip(AMateria* m)
 {
 	for (int i = 0; i < 4; i++)
 	{
-		if (_inventory[i] == nullptr)
+		if (_inventory[i] == NULL)
 		{
 			_inventory[i] = m;
-			std::cout << "Equipped " << m->getType() << " to slot " << i << " of " << _name << std::endl;
-			return;
+			std::cout << "Equipped " << m->getType() << " to slot "
+				<< i << " of " << _name << std::endl;
+			return ;
 		}
 	}
-	std::cout << _name << "'s inventory is full! Cannot equip " << m->getType() << std::endl;
+	std::cout << _name << "'s inventory is full! Cannot equip "
+		<< m->getType() << std::endl;
 }
 
 void Character::unequip(int idx)
@@ -94,16 +96,18 @@ void Character::unequip(int idx)
 	if (idx < 0 || idx >= 4)
 	{
 		std::cout << "Invalid inventory index!" << std::endl;
-		return;
+		return ;
 	}
 	if (_inventory[idx])
 	{
-		std::cout << "Unequipped " << _inventory[idx]->getType() << " from slot " << idx << " of " << _name << std::endl;
-		_inventory[idx] = nullptr;
+		std::cout << "Unequipped " << _inventory[idx]->getType()
+			<< " from slot " << idx << " of " << _name << std::endl;
+		_inventory[idx] = NULL;
 	}
 	else
 	{
-		std::cout << "No materia to unequip in slot " << idx << " of " << _name << std::endl;
+		std::cout << "No materia to unequip in slot " << idx
+			<< " of " << _name << std::endl;
 	}
 }
 void Character::use(int idx, ICharacter& target)
@@ -111,14 +115,10 @@ void Character::use(int idx, ICharacter& target)
 	if (idx < 0 || idx >= 4)
 	{
 		std::cout << "Invalid inventory index!" << std::endl;
-		return;
+		return ;
 	}
 	if (_inventory[idx])
-	{
 		_inventory[idx]->use(target);
-	}
 	else
-	{
 		std::cout << "No materia in slot " << idx << " of " << _name << std::endl;
-	}
 }

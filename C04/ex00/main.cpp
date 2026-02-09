@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:50:24 by belinore          #+#    #+#             */
-/*   Updated: 2026/02/09 14:31:28 by belinore         ###   ########.fr       */
+/*   Updated: 2026/02/09 16:52:19 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,26 @@ int main()
 	animal_ptr->makeSound();
 	delete animal_ptr;
 
-	std::cout << "\n[8 - WrongCat test]\n";
+	std::cout << "\n[8 - WrongCat test -> outputs the WrongAnimal sound]\n";
 	const WrongAnimal* wrongCat = new WrongCat();
 	std::cout << "wrongCat Type: " << wrongCat->getType() << "\n";
 	std::cout << "wrongCat Sound: ";
 	wrongCat->makeSound();
-	//outputs the WrongAnimal sound
 	delete wrongCat;
+	
+	//INCORRECT tests - creates a generic animal
+	std::cout << "\n[9 - no Cat object is created - no polymorphism]\n";
+	Animal a = Cat();//object slicing
+	std::cout << "Type: " << a.getType() << "\n";
+	a.makeSound();
+	Animal* p = new Animal("Cat");
+	std::cout << "Type: " << p->getType() << "\n";
+	p->makeSound();
 	std::cout << std::endl;
+
 	// Mixed tests - should not compile
 	// const Animal* a = new WrongCat();
 	// const WrongAnimal* wa = new Cat();
+
 	return 0;
 }
