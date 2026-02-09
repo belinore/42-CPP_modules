@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:41:57 by belinore          #+#    #+#             */
-/*   Updated: 2026/01/22 22:45:31 by belinore         ###   ########.fr       */
+/*   Updated: 2026/02/09 13:16:41 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <iostream>
 
-//abstract base class
 class Animal
 {
 	public:

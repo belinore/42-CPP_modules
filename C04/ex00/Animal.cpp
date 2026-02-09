@@ -6,22 +6,18 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:50:02 by belinore          #+#    #+#             */
-/*   Updated: 2026/01/22 22:50:02 by belinore         ###   ########.fr       */
+/*   Updated: 2026/02/09 14:32:38 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ostream>
 #include "Animal.hpp"
 
-Animal::Animal() : _type("Animal")
+Animal::Animal() : _type("GenericAnimal")
 {
 	std::cout << "Constructed: Animal" << std::endl;
 }
 
-Animal::Animal(const std::string &type) : _type(type)
-{
-	std::cout << "Constructed: Animal" << std::endl;
-}
 Animal::~Animal()
 {
 	std::cout << "Destructed: Animal" << std::endl;
@@ -42,7 +38,7 @@ Animal &Animal::operator=(const Animal &other)
 
 void Animal::makeSound() const
 {
-	std::cout << "Animal sound!" << std::endl;
+	std::cout << "*Unidentifiable animal sound*" << std::endl;
 }
 
 std::string Animal::getType() const

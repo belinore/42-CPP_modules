@@ -6,15 +6,16 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:50:09 by belinore          #+#    #+#             */
-/*   Updated: 2026/01/22 22:50:10 by belinore         ###   ########.fr       */
+/*   Updated: 2026/02/09 14:30:16 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Cat.hpp"
 #include "Animal.hpp"
 
-Cat::Cat() : Animal("Cat")
+Cat::Cat()
 {
+	_type = "Cat";
 	std::cout << "Constructed: Cat" << std::endl;
 }
 

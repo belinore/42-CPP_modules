@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:50:38 by belinore          #+#    #+#             */
-/*   Updated: 2026/01/22 22:50:38 by belinore         ###   ########.fr       */
+/*   Updated: 2026/02/09 14:33:30 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@ WrongAnimal::WrongAnimal() : _type("WrongAnimal")
 	std::cout << "Constructed: WrongAnimal" << std::endl;
 }
 
-WrongAnimal::WrongAnimal(const std::string &type) : _type(type)
-{
-	std::cout << "Constructed: WrongAnimal" << std::endl;
-}
 WrongAnimal::~WrongAnimal()
 {
 	std::cout << "Destructed: WrongAnimal" << std::endl;
@@ -42,7 +38,7 @@ WrongAnimal &WrongAnimal::operator=(const WrongAnimal &other)
 
 void WrongAnimal::makeSound() const
 {
-	std::cout << "WrongAnimal sound!" << std::endl;
+	std::cout << "*Unidentifiable animal sound*" << std::endl;
 }
 
 std::string WrongAnimal::getType() const

@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 22:48:44 by belinore          #+#    #+#             */
-/*   Updated: 2026/01/22 22:48:45 by belinore         ###   ########.fr       */
+/*   Updated: 2026/02/09 13:15:44 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ class WrongAnimal
 	WrongAnimal(const WrongAnimal &other);
 	WrongAnimal &operator=(const WrongAnimal &other);
 
-	virtual void makeSound() const; //removed virtual
+	virtual void makeSound() const;
 	std::string getType() const;
 
 	protected:
