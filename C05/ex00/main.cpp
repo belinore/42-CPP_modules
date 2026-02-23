@@ -1,36 +1,54 @@
 #include "Bureaucrat.hpp"
 
-void testGradeTooHigh()
+Bureaucrat *createBureaucrat(std::string name, int grade)
 {
+	Bureaucrat *p = NULL;
 	try
 	{
-		Bureaucrat a("Alice", 0);
+		p = new Bureaucrat(name, grade);
 	}
 	catch (const std::exception &e)
 	{
-		std::cout << e.what() << "\n";
-		return ;
+		std::cout << e.what() << " : " << name << " with grade " << grade << "\n";
+		return (p);
 	}
-	//std::cout << a.getName() << " has grade " << a.getGrade() << "\n";
+	std::cout << *p << "\n";
+	return (p);
 }
 
-void testGradeTooLow()
+void testGrade(std::string name, int grade)
 {
 	try
 	{
-		Bureaucrat a("Bob", 151);
+		Bureaucrat a(name, grade);
 	}
 	catch (const std::exception &e)
 	{
-		std::cout << e.what() << "\n";
+		std::cout << e.what() << " : " << name << " with grade " << grade << "\n";
+		return ;
 	}
+	std::cout << "Valid Bureaucrat construction for " << name << " with grade " << grade << "\n";
+	return ;
 }
 
 int main()
 {
-	Bureaucrat a("Beth", 1);
-	std::cout << a.getName() << " has grade " << a.getGrade() << "\n";
-	testGradeTooHigh();
-	testGradeTooLow();
+	testGrade("Employee1", 1);//valid
+	testGrade("Employee2", 150);//valid
+	testGrade("Employee3", 50);//valid
+
+	testGrade("Employee4", 0);//too high
+	testGrade("Employee5", -1);//too high
+
+	testGrade("Employee6", 151);//too low
+	testGrade("Employee7", 100000000);//too low
+
+	Bureaucrat *a = createBureaucrat("Alice", 15);
+	Bureaucrat *b = createBureaucrat("Beth", 1);
+	Bureaucrat *c = createBureaucrat("Chris", 155);
+
+	delete a;
+	delete b;
+	delete c;
 
 }
