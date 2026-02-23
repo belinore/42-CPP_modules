@@ -17,13 +17,25 @@ Bureaucrat *createBureaucrat(std::string name, int grade)
 	return (p);
 }
 
+void signForm(Bureaucrat &bureaucrat, Form &form)
+{
+	try
+	{
+		form.beSigned(bureaucrat);
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << '\n';
+	}
+}
+
 int main()
 {
-	Bureaucrat *b = createBureaucrat("Beth", 1);
+	Bureaucrat *b = createBureaucrat("Beth", 50);
 	Form a("Application", 2, 1);
 	std::cout << a << "\n";
 	
-	a.beSigned(*b);
+	signForm(*b, a);
 	std::cout << a << "\n";
 
 }
