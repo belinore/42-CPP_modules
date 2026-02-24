@@ -17,25 +17,57 @@ Bureaucrat *createBureaucrat(std::string name, int grade)
 	return (p);
 }
 
-void signForm(Bureaucrat &bureaucrat, Form &form)
+void test(std::string b_name, int b_grade, std::string f_name, int f_grade_sign, int f_grade_execute)
 {
 	try
 	{
-		form.beSigned(bureaucrat);
+		Bureaucrat a(b_name, b_grade);
+		Form f(f_name, f_grade_sign, f_grade_execute);
+		a.signForm(f);
 	}
-	catch(const std::exception& e)
+	catch (const Bureaucrat::GradeTooHighException &e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cout << "Bureaucrat " << b_name << " was not created : " << e.what() << "\n";
 	}
+	catch (const Bureaucrat::GradeTooLowException &e)
+	{
+		std::cout << "Bureaucrat " << b_name << " was not created : " << e.what() << "\n";
+	}
+	catch (const Form::GradeTooHighException &e)
+	{
+		std::cout << "Form " << f_name << " was not created : " << e.what() << "\n";
+	}
+	catch (const Form::GradeTooLowException &e)
+	{
+		std::cout << "Form " << f_name << " was not created : " << e.what() << "\n";	
+	}
+	std::cout << "\n";
+	return ;
 }
 
 int main()
 {
-	Bureaucrat *b = createBureaucrat("Beth", 50);
-	Form a("Application", 2, 1);
-	std::cout << a << "\n";
+	std::cout << CYAN << "INVALID BUREAUCRAT CONSTRUCTIONS\n" << RESET;
+	test("Sam", 500, "Application1", 2, 1);
+	test("Tim", 0, "Application2", 2, 1);
+
+	std::cout << CYAN << "INVALID FORM CONSTRUCTIONS\n" << RESET;
+	test("Bob", 1, "Application3", 200, 1);
+	test("Joe", 1, "Application4", 0, 1);
+
+	std::cout << CYAN << "VALID AND ABLE TO SIGN\n" << RESET;
+	test("Cat", 1, "Application5", 2, 1);
+	test("Beth", 50, "Application6", 150, 100);
 	
-	signForm(*b, a);
-	std::cout << a << "\n";
+	std::cout << CYAN << "VALID BUT UNABLE TO SIGN\n" << RESET;
+	test("Jane", 140, "Application7", 139, 1);
+	test("Ella", 50, "Application8", 5, 2);
 
 }
+
+	// Bureaucrat *b = createBureaucrat("Beth", 50);
+	// Form a("Application", 2, 1);
+	// std::cout << a << "\n";
+	
+	// b->signForm(a);
+	// std::cout << a << "\n";
