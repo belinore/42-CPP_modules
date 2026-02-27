@@ -1,10 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Bureaucrat.hpp                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/27 17:53:40 by belinore          #+#    #+#             */
+/*   Updated: 2026/02/27 17:53:46 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef BUREAUCRAT_HPP
 
 #include <iostream>
 #include <string>
 
-#define CYAN    "\033[36m"
-#define RESET   "\033[0m"
 #define MAX_GRADE 1
 #define MIN_GRADE 150
 
@@ -19,17 +29,13 @@ class Bureaucrat
 	public:
 	Bureaucrat(const std::string &name, int grade);
 	~Bureaucrat();
-	Bureaucrat(Bureaucrat &other);
-	Bureaucrat &operator=(Bureaucrat &other);
+	Bureaucrat(const Bureaucrat &other);
+	Bureaucrat &operator=(const Bureaucrat &other);
 
 	const std::string &getName() const;
 	int	getGrade() const;
 	void incrementGrade();
 	void decrementGrade();
-
-	//ex01
-	void signForm(Form &form);
-	//endex01
 
 	class GradeTooHighException : public std::exception
 	{

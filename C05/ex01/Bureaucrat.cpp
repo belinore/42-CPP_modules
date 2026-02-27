@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Bureaucrat.cpp                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/27 17:54:10 by belinore          #+#    #+#             */
+/*   Updated: 2026/02/27 17:54:13 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Bureaucrat.hpp"
 #include "Form.hpp"
 
@@ -17,19 +29,20 @@ Bureaucrat::~Bureaucrat()
 	std::cout << "Destructed: Bureaucrat " << _name << "\n";
 }
 
-Bureaucrat::Bureaucrat(Bureaucrat &other)
+Bureaucrat::Bureaucrat(const Bureaucrat &other)
 {
 	Bureaucrat(other.getName(), other.getGrade());
 	std::cout << "Copy Constructed: Bureaucrat " << _name << "\n";
 }
 
-Bureaucrat &Bureaucrat::operator=(Bureaucrat &other)
+Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other)
 {
 	if (this != &other)
 	{
 		this->_grade = other.getGrade();
 	}
 	return (*this);
+	std::cout << "Copy Assigned: Bureaucrat " << _name << "\n";
 }
 
 const std::string &Bureaucrat::getName() const
@@ -54,12 +67,12 @@ void Bureaucrat::decrementGrade()
 
 const char* Bureaucrat::GradeTooHighException::what() const throw()
 {
-	return ("Grade is too high");
+	return ("Grade is too high [Bureaucrat]");
 }
 
 const char* Bureaucrat::GradeTooLowException::what() const throw()
 {
-	return ("Grade is too low");
+	return ("Grade is too low [Bureaucrat]");
 }
 
 std::ostream &operator<<(std::ostream &os, Bureaucrat &bureaucrat)

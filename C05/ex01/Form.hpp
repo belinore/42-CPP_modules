@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Form.hpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/27 17:54:33 by belinore          #+#    #+#             */
+/*   Updated: 2026/02/27 17:54:34 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef FORM_HPP
 # define FORM_HPP
 
@@ -15,13 +27,13 @@ class Form
 	const int _gradeToExecute;
 
 	public:
-	Form(const std::string name, int gradeToSign, int gradeToExecute);
+	Form(const std::string &name, int gradeToSign, int gradeToExecute);
 	~Form();
-	Form(Form &other);
-	Form &operator=(Form &other);
+	Form(const Form &other);
+	Form &operator=(const Form &other);
 
-	const std::string &getName();
-	bool getIsSigned();
+	const std::string &getName() const;
+	bool getIsSigned() const;
 	int getGradeToSign() const;
 	int getGradeToExecute() const;
 
