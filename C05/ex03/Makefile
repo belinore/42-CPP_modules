@@ -3,7 +3,7 @@ SRC = main.cpp Bureaucrat.cpp AForm.cpp ShrubberyCreationForm.cpp RobotomyReques
 OBJS = $(SRC:.cpp=.o)
 
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -I../ex00
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 all: $(NAME)
 

@@ -6,11 +6,12 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 18:01:01 by belinore          #+#    #+#             */
-/*   Updated: 2026/02/27 18:01:01 by belinore         ###   ########.fr       */
+/*   Updated: 2026/02/28 10:35:59 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUREAUCRAT_HPP
+# define BUREAUCRAT_HPP
 
 #include <iostream>
 #include <string>
