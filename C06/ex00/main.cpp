@@ -11,13 +11,12 @@ int main(int argc, char **argv)
 	}
 	else
 	{
-		std::cerr << "Error: expected 2 args ./convert [value]\n";
+		std::cerr << "Error: expected usage ./convert [value]\n";
 		if (argc == 1)
 		{
-			if (get_yesno_input("Run default tests? y/n"))
+			if (get_yesno_input("Run default test cases? y/n"))
 				test_examples();
 		}
 	}
 	return (0);
 }
-
