@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 17:59:53 by belinore          #+#    #+#             */
-/*   Updated: 2026/02/27 17:59:53 by belinore         ###   ########.fr       */
+/*   Updated: 2026/03/01 10:21:54 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void RobotomyRequestForm::execute(Bureaucrat const &executor) const
 	else if (executor.getGrade() > getGradeToExecute())
 		throw GradeTooLowException();
 	std::cout << "Bzzzz... Bzzzz... *drilling noises*... ";
+	srand(time(NULL));
 	if (rand() % 2)
 		std::cout << _target << " has been robotomized successfully!\n";
 	else
