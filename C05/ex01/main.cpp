@@ -6,14 +6,15 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 17:54:38 by belinore          #+#    #+#             */
-/*   Updated: 2026/02/27 17:54:39 by belinore         ###   ########.fr       */
+/*   Updated: 2026/03/02 16:58:38 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
 #include "Form.hpp"
 
-void test(std::string b_name, int b_grade, std::string f_name, int f_grade_sign, int f_grade_execute)
+void test(std::string b_name, int b_grade,
+		  std::string f_name, int f_grade_sign, int f_grade_execute)
 {
 	try
 	{
@@ -23,19 +24,23 @@ void test(std::string b_name, int b_grade, std::string f_name, int f_grade_sign,
 	}
 	catch (const Bureaucrat::GradeTooHighException &e)
 	{
-		std::cout << "Bureaucrat " << b_name << " was not created : " << e.what() << "\n";
+		std::cout << "Bureaucrat " << b_name
+				  << " was not created : " << e.what() << "\n";
 	}
 	catch (const Bureaucrat::GradeTooLowException &e)
 	{
-		std::cout << "Bureaucrat " << b_name << " was not created : " << e.what() << "\n";
+		std::cout << "Bureaucrat "
+				  << b_name << " was not created : " << e.what() << "\n";
 	}
 	catch (const Form::GradeTooHighException &e)
 	{
-		std::cout << "Form " << f_name << " was not created : " << e.what() << "\n";
+		std::cout << "Form " << f_name
+				  << " was not created : " << e.what() << "\n";
 	}
 	catch (const Form::GradeTooLowException &e)
 	{
-		std::cout << "Form " << f_name << " was not created : " << e.what() << "\n";	
+		std::cout << "Form " << f_name
+				  << " was not created : " << e.what() << "\n";	
 	}
 	return ;
 }

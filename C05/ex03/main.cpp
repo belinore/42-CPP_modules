@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 18:01:16 by belinore          #+#    #+#             */
-/*   Updated: 2026/02/27 18:01:17 by belinore         ###   ########.fr       */
+/*   Updated: 2026/03/02 17:00:55 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,23 @@ void test_forms(std::string b_name, int b_grade, std::string target)
 	}
 	catch (const Bureaucrat::GradeTooHighException &e)
 	{
-		std::cout << "Bureaucrat " << b_name << " was not created : " << e.what() << "\n";
+		std::cout << "Bureaucrat " << b_name
+				  << " was not created : " << e.what() << "\n";
 	}
 	catch (const Bureaucrat::GradeTooLowException &e)
 	{
-		std::cout << "Bureaucrat " << b_name << " was not created : " << e.what() << "\n";
+		std::cout << "Bureaucrat " << b_name
+				  << " was not created : " << e.what() << "\n";
 	}
 	catch (const AForm::GradeTooHighException &e)
 	{
-		std::cout << "ShrubberyCreationForm was not created : " << e.what() << "\n";
+		std::cout << "ShrubberyCreationForm was not created : "
+				  << e.what() << "\n";
 	}
 	catch (const AForm::GradeTooLowException &e)
 	{
-		std::cout << "ShrubberyCreationForm was not created : " << e.what() << "\n";	
+		std::cout << "ShrubberyCreationForm was not created : "
+				  << e.what() << "\n";	
 	}
 	std::cout << "\n";
 	return ;
