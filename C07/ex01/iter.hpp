@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-template <typename Type> void iter(Type *array, const size_t length, void (*function)(Type &))
+template <typename Type, typename Func> void iter(Type *array, size_t length, Func function)
 {
     for (size_t i = 0; i < length; i++)
         function(array[i]);
