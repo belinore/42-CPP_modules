@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ScalarConverter.cpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/19 17:08:27 by belinore          #+#    #+#             */
+/*   Updated: 2026/03/19 17:08:28 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ScalarConverter.hpp"
 
 #include <iostream>
 #include <iomanip>
 #include <cstdlib>
 #include <limits>
+#include <cmath>
 
 void ScalarConverter::convert(const std::string &literal)
 {
@@ -73,7 +86,7 @@ bool ScalarConverter::invalidInput(char *end)
 				  << "Int: Impossible\n"
 				  << "Float: Impossible\n"
 				  << "Double: Impossible\n";
-		return true;
+		return (true);
 	}
-	return false;
+	return (false);
 }

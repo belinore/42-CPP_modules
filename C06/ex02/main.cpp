@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/19 17:09:58 by belinore          #+#    #+#             */
+/*   Updated: 2026/03/19 17:09:59 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Base.hpp"
 #include <ctime>
 #include <cstdlib>
@@ -31,21 +43,21 @@ void identify(Base& p)
 		(void)test;
 		std::cout << "A\n";
 		return ;
-	} catch(const std::bad_cast &e){}
+	} catch(...){}
 	try
 	{
 		B &test = dynamic_cast<B&>(p);
 		(void)test;
 		std::cout << "B\n";
 		return ;
-	} catch(const std::bad_cast &e){}
+	} catch(...){}
 	try
 	{
 		C &test = dynamic_cast<C&>(p);
 		(void)test;
 		std::cout << "C\n";
 		return ;
-	} catch(const std::bad_cast &e){}
+	} catch(...){}
 }
 
 int main()

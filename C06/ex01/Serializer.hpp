@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Serializer.hpp                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/19 17:09:36 by belinore          #+#    #+#             */
+/*   Updated: 2026/03/19 17:09:37 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SERIALIZER_HPP
 #define SERIALIZER_HPP
 
-#include <cstdint>
+#include <stdint.h>
 
 class Data;
 
