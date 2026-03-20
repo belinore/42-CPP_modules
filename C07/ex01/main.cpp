@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 19:24:20 by belinore          #+#    #+#             */
-/*   Updated: 2026/03/19 19:24:21 by belinore         ###   ########.fr       */
+/*   Updated: 2026/03/20 13:47:40 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void printInt(const int &n)
     std::cout << "[" << n << "]";
 }
 
-void printChar(char &c)
+void printChar(const char &c)
 {
     std::cout << c;
 }
@@ -31,7 +31,7 @@ void encodeLowerChar(char &c)
         c += 1;
 }
 
-void printTotalLetters(std::string &s)
+void printTotalLetters(const std::string &s)
 {
     std::cout << s.length() << " ";
 }
