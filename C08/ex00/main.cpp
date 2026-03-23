@@ -3,15 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-#include <sys/time.h>
 
-size_t	get_time(void)
-{
-	struct timeval	current_time;
-
-	gettimeofday(&current_time, NULL);
-	return ((current_time.tv_sec * 1000) + (current_time.tv_usec / 1000));
-}
 
 void print_vector_all(std::vector<int> &v)
 {
@@ -39,16 +31,16 @@ void print_vector(std::vector<int> &v, size_t start, size_t size)
 
 void generate_random_numbers(std::vector<int> &v, size_t size)
 {
-	srand(get_time());
-	for (int i = 0; i < size; i++)
+	for (size_t i = 0; i < size; i++)
 	{
-		v.push_back(rand());
+		v.push_back(rand() % 100);
 	}
 
 }
 
 int main()
 {
+	srand(time(NULL));
 	//Vector
 	std::vector<int> v;
 	if (v.empty())
