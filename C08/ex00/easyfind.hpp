@@ -2,6 +2,7 @@
 # define EASYFIND_HPP
 
 #include <algorithm>
+#include <string>
 
 #define CYAN "\033[36m"
 #define RESET "\033[0m"

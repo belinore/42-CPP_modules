@@ -1,5 +1,5 @@
 NAME = span_ex01
-SRC = main.cpp
+SRC = main.cpp Span.cpp
 OBJS = $(SRC:.cpp=.o)
 
 CC = c++
