@@ -1,21 +1,11 @@
-//#include "easyfind.hpp"
+#include "easyfind.hpp"
 
 #include <iostream>
 #include <vector>
-#include <queue>
+#include <deque>
+#include <list>
 
-
-void print_vector_all(std::vector<int> &v)
-{
-	std::vector<int>::iterator it = v.begin();
-	for (; it != v.end(); it++)
-	{
-		std::cout << *it << " ";
-	}
-	std::cout << "\n";
-}
-
-void print_vector(std::vector<int> &v, size_t start, size_t size)
+void print_vector_from_index(std::vector<int> &v, size_t start, size_t size)
 {
 	try
 	{
@@ -24,43 +14,77 @@ void print_vector(std::vector<int> &v, size_t start, size_t size)
 	}
 	catch(const std::exception& e)
 	{
-		std::cerr << e.what() << '\n';
+		std::cerr << "Exception: Index out of range" << '\n';
 	}
-	std::cout << "\n";
+    std::cout << "\n";
 }
 
-void generate_random_numbers(std::vector<int> &v, size_t size)
+void test_easyfind_vector(std::vector<int> &v, int to_find)
 {
-	for (size_t i = 0; i < size; i++)
-	{
-		v.push_back(rand() % 100);
-	}
-
+    try
+    {
+        std::cout << "Searching for " << to_find << "\n";
+        std::vector<int>::iterator it = easyfind(v, to_find);
+        std::cout << "Success: Found "<< *it << "\n";
+        int index = std::distance(v.begin(), it);
+        std::cout << "Vector from iter: ";
+        print_vector_from_index(v, index, v.size());
+        std::cout << "\n";
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << "Exception: " << e.what() << '\n';
+    } 
 }
 
 int main()
 {
-	srand(time(NULL));
-	//Vector
-	std::vector<int> v;
-	if (v.empty())
-		std::cout << "Empty vector created...\n";
-	v.push_back(1);
-	v.push_back(2);
-	std::cout << v.at(0) << " = " << v.front() << " / "
-	          << v.at(1) << " = " << v.back() << "\n";
-	std::cout << "Size = " << v.size() << " Max size: "
-			  << v.max_size() << "\n"; 
-	for (int i = 3; i < 10; i++)
+    //Vector
+    std::vector<int> v;
+    for (size_t i = 0; i < 10; i++)
 		v.push_back(i);
-	print_vector(v, 0, v.size());
-	print_vector_all(v);
-	std::vector<int> v2;
-	generate_random_numbers(v2, 20);
-	print_vector_all(v2);
+    std::cout << CYAN << "Vector: ";
+    print_vector_from_index(v, 0, v.size());
+    std::cout << RESET;
+    test_easyfind_vector(v, 5);
+    test_easyfind_vector(v, 3);
+    test_easyfind_vector(v, -1);
+    std::cout << CYAN << "\nVector with template functions: \n" << RESET;
+    test_easyfind(v, 0, "Vector");
+    test_easyfind(v, 9, "Vector");
+    test_easyfind(v, 15, "Vector");
 
-	//Queue
-	//std::queue<int> q;
-	
-	// std::c
+    // //List
+    std::list<int> l;
+    for (size_t i = 0; i < 10; i++)
+        l.push_back(i);
+    print_container_all(l, CYAN "\nList: ");
+    std::cout << RESET;
+    test_easyfind(l, 2, "List");
+    test_easyfind(l, -8, "List");
+
+    // //Deque
+    std::deque<int> d;
+    for (size_t i = 0; i < 10; i++)
+        d.push_back(i);
+    std::string other = "other";
+    print_container_all(d, CYAN "\nDeque: ");
+    std::cout << RESET;
+    test_easyfind(d, 3, "Deque");
+    test_easyfind(d, -5, "Deque");
 }
+
+//a vector is a dynamic array - can add and remove elements from the back - can access any element by index - can be resized - can be sorted - can be iterated
+//a queue is a first in first out data structure - can only add to the back and remove from the front
+//a stack is a last in first out data structure - can only add and remove from the top
+//a deque is a double ended queue - can add and remove from both ends - can be used as a stack or a queue. iteration is possible but not efficient -> can be sorted but not efficient
+//a list is a doubly linked list - can add and remove elements from both ends - can access any element by index but it's not efficient - can be sorted - can be iterated
+//a set is a collection of unique elements - can be sorted - can be iterated - can be used to check if an element exists in the set - can be used to find the intersection, union and difference of sets
+//a map is a collection of key-value pairs - can be sorted by key - can be iterated - can be used to check if a key exists in the map - can be used to find the value associated with a key
+
+//to learn later: unordered_set, unordered_map, bitset, pair and tuple
+//a unordered_set is a collection of unique elements - can be iterated - can be used to check if an element exists in the set - can be used to find the intersection, union and difference of sets - not sorted
+//an unordered_map is a collection of key-value pairs - can be iterated - can be used to check if a key exists in the map - can be used to find the value associated with a key - not sorted
+//a bitset is a collection of bits - can be used to represent a set of boolean values - can be used to perform bitwise operations - can be iterated
+//a pair is a collection of two values - can be used to store a pair of values - can be used to return multiple values from a function - can be iterated
+//a tuple is a collection of multiple values - can be used to store multiple values - can be used to return multiple values from a function - can be iterated
