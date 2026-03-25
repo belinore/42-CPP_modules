@@ -37,7 +37,7 @@ unsigned int Span::shortestSpan()
 	if (_array.size() == 0)
 		throw std::length_error("Cannot find shortest span, Span is empty");
     else if (_array.size() == 1)
-        throw std::length_error("Cannot find shortest span, Span has only one number");
+		throw std::length_error("Cannot find shortest span, Span has only one number");
 	std::vector<int> sorted = _array;
 	std::sort(sorted.begin(), sorted.end());
 	print_vector_all(sorted, "Sorted vector: ");
@@ -58,7 +58,7 @@ unsigned int Span::longestSpan()
 	if (_array.size() == 0)
 		throw std::length_error("Cannot find longest span, Span is empty");
     else if (_array.size() == 1)
-        throw std::length_error("Cannot find longest span, Span has only one number");
+		throw std::length_error("Cannot find longest span, Span has only one number");
 	std::vector<int>::iterator min = std::min_element(_array.begin(), _array.end());
 	std::vector<int>::iterator max = std::max_element(_array.begin(), _array.end());
 	return (*max - *min);

@@ -118,7 +118,6 @@ int main()
     test_span(gen_random_nbrs<std::list<int> >, "List", std::list<int>(), 10);
 
 
-
     //q: which other containers have iterators that can be used with the addNumber template function?
     //a: Any container that supports iterators can be used with the addNumber template function. This includes:
     // - std::list
