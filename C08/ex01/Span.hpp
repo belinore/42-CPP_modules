@@ -22,17 +22,20 @@ class Span
     unsigned int longestSpan();
 
 	template <typename I>
-	void addNumber2(I begin, I end);
+	void addNumber(I begin, I end);
 };
 
 template <typename I>
-void Span::addNumber2(I begin, I end)
+void Span::addNumber(I begin, I end)
 {
 	for (I it = begin; it != end; it++)
 	{
 		addNumber(*it);
 	}
 }
+
+template <typename T>
+void print_container_all(T &container, std::string prefix);
 
 void print_vector_all(std::vector<int> &v, std::string prefix = "");
 
