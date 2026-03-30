@@ -3,7 +3,7 @@ SRC = main.cpp Span.cpp
 OBJS = $(SRC:.cpp=.o)
 
 CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -I.
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 all: $(NAME)
 
