@@ -35,8 +35,14 @@ void Span::addNumber(I begin, I end)
 }
 
 template <typename T>
-void print_container_all(T &container, std::string prefix);
-
-void print_vector_all(std::vector<int> &v, std::string prefix = "");
+void print_container(T &container, std::string prefix)
+{
+    if (!prefix.empty())
+        std::cout << prefix;
+    typename T::iterator it = container.begin();
+    for (; it != container.end(); it++)
+        std::cout << *it << " ";
+    std::cout << "\n";
+}
 
 #endif

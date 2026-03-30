@@ -11,7 +11,7 @@ Span::Span(const Span &other)
 {
 	Span(other._maxSize);
     _array = other._array;
-	std::cout << "Copy Constructed: Span" << "\n";//TO TEST
+	std::cout << "Copy Constructed: Span" << "\n";
 }
 
 Span &Span::operator=(const Span &other)
@@ -40,7 +40,7 @@ unsigned int Span::shortestSpan()
         throw std::length_error("Cannot find shortest span, Span has only one number");
 	std::vector<int> sorted = _array;
 	std::sort(sorted.begin(), sorted.end());
-	print_vector_all(sorted, "Sorted vector: ");
+    //print_container(sorted, "Sorted vector: ");
 	unsigned int shortest = std::numeric_limits<unsigned int>::max();
 	std::vector<int>::iterator it = sorted.begin();
 	unsigned int span;
