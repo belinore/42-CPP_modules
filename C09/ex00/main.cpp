@@ -11,7 +11,7 @@ int main(int argc, char **argv)
     try
     {
         BitcoinExchange btc(argv[1]);
-        //btc.processInput();
+        btc.processInput();
     }
     catch(const std::exception& e)
     {
