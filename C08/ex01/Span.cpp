@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Span.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/15 09:38:49 by belinore          #+#    #+#             */
+/*   Updated: 2026/04/15 09:45:18 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Span.hpp"
 #include <iostream>
 #include <limits>
@@ -64,10 +76,4 @@ unsigned int Span::longestSpan()
 	return (*max - *min);
 }
 
-void Span::addNumbers(std::vector<int> &v)
-{
-	std::vector<int>::iterator it = v.begin();
-	for (; it != v.end(); it++)
-		addNumber(*it);
-}
 

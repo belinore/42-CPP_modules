@@ -1,12 +1,20 @@
-#define CYAN "\033[36m"
-#define RESET "\033[0m"
-#define RANDOM_MAX 50
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/15 09:45:33 by belinore          #+#    #+#             */
+/*   Updated: 2026/04/15 09:45:54 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Span.hpp"
 #include <iostream>
 #include <vector>
 #include <deque>
 #include <list>
-#include <algorithm>
 
 template <typename T>
 void gen_random_nbrs(T &c, size_t size)

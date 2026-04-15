@@ -1,8 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   span.hpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/15 09:38:56 by belinore          #+#    #+#             */
+/*   Updated: 2026/04/15 09:45:23 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SPAN_HPP
 # define SPAN_HPP
 
 #include <vector>
 #include <string>
+
+#define CYAN "\033[36m"
+#define RESET "\033[0m"
+#define RANDOM_MAX 50
 
 class Span
 {
@@ -17,7 +33,6 @@ class Span
     Span &operator=(const Span &other);
 
     void addNumber(int N);
-	void addNumbers(std::vector<int> &v);
     unsigned int shortestSpan();
     unsigned int longestSpan();
 
