@@ -31,4 +31,15 @@ class PmergeMe
 
 void printVector(std::vector<int> &vector, std::string prefix);
 
+template <typename T>
+void print_container(T &container, std::string prefix)
+{
+    if (!prefix.empty())
+        std::cout << prefix;
+    typename T::iterator it = container.begin();
+    for (; it != container.end(); it++)
+        std::cout << *it << " ";
+    std::cout << "\n";
+}
+
 #endif

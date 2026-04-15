@@ -1,5 +1,16 @@
-#include "easyfind.hpp"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/15 16:08:35 by belinore          #+#    #+#             */
+/*   Updated: 2026/04/15 16:08:36 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#include "easyfind.hpp"
 #include <iostream>
 #include <vector>
 #include <deque>

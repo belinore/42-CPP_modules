@@ -193,6 +193,7 @@ void PmergeMe::processInput()
     sortRecursiveVector(_sortedVector);
     clock_t end = clock();
     double elapsed = double(end - start);
+    print_container(_vector, "Original vector");
     // printVector(_vector, "Original vector: ");
     // printVector(_sortedVector, "Sorted vector: ");
     std::cout << "Is sorted?: " << (isSorted(_sortedVector) ? "Yes" : "No") << "\n";

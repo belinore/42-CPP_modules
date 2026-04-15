@@ -3,6 +3,8 @@
 
 #include <string>
 #include <map>
+#include <algorithm>
+#include <stdexcept>
 
 class BitcoinExchange
 {
@@ -17,6 +19,7 @@ class BitcoinExchange
     BitcoinExchange &operator=(const BitcoinExchange &other);
 
     void processInput();
+    float getExchangeRate(const std::string &date);
 };
 
 template <typename T>
