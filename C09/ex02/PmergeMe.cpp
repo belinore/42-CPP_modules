@@ -5,22 +5,12 @@
 #include <iostream>
 #include <algorithm>
 #include <ctime>
+#include <iomanip>
 
-PmergeMe::PmergeMe(int argc, char **argv)
+PmergeMe::PmergeMe(int argc, char **argv) : _processed(false)
 {
-    if (!argv && TEST_MODE)
-    {
-        for (int i = 0; i < argc; i++)
-        {
-            int num = rand() % RANDOM_MAX;
-            _vector.push_back(num);
-            _list.push_back(num);
-            _deque.push_back(num);
-        }
-        return ;
-    }
-    else if (!argv)
-        throw std::invalid_argument("No arguments provided");
+    if (!argv || argc < 1)
+        throw std::invalid_argument("Invalid parameters passed to PmergeMe constructor");
     for (int i = 1; i < argc; i++)
     {
         std::string arg(argv[i]);
@@ -33,197 +23,260 @@ PmergeMe::PmergeMe(int argc, char **argv)
         _list.push_back(num);
         _deque.push_back(num);
     }
+    _size = _vector.size();
+
+}
+
+PmergeMe::PmergeMe(size_t size) : _processed(false)
+{
+    if (size == 0)
+        throw std::invalid_argument("Size must be greater than 0");
+    for (size_t i = 0; i < size; i++)
+    {
+        int num = rand() % RANDOM_MAX;
+        _vector.push_back(num);
+        _list.push_back(num);
+        _deque.push_back(num);
+    }
+    _size = size;
 }
 
 PmergeMe::~PmergeMe() {}
 
-PmergeMe::PmergeMe(const PmergeMe &other) : _vector(other._vector), _list(other._list), _deque(other._deque) {}
+PmergeMe::PmergeMe(const PmergeMe &other)
+: _vector(other._vector), _deque(other._deque), _list(other._list), _jacobsthal(other._jacobsthal)
+, _jacobsthalDeque(other._jacobsthalDeque), _size(other._size), _processed (other._processed)
+{
+    if (other._processed)
+    {
+        _sortedVector = other._sortedVector;
+        _sortedList = other._sortedList;
+        _sortedDeque = other._sortedDeque;
+        _vectorTime = other._vectorTime;
+        _listTime = other._listTime;
+        _dequeTime = other._dequeTime;
+    }
+}
 
 PmergeMe &PmergeMe::operator=(const PmergeMe &other)
 {
     if (this != &other)
     {
         _vector = other._vector;
-        _list = other._list;
         _deque = other._deque;
+        _list = other._list;
+        _jacobsthal = other._jacobsthal;
+        _jacobsthalDeque = other._jacobsthalDeque;
+        _size = other._size;
+         _processed = other._processed;
+        if (other._processed)
+        {
+            _sortedVector = other._sortedVector;
+            _sortedList = other._sortedList;
+            _sortedDeque = other._sortedDeque;
+            _vectorTime = other._vectorTime;
+            _listTime = other._listTime;
+            _dequeTime = other._dequeTime;
+        }
     }
     return (*this);
 }
 
-void printVector(std::vector<int> &vector, std::string prefix)
-{
-    if (!prefix.empty())
-        std::cout << prefix;
-    for (size_t i = 0; i < vector.size(); i++)
-        std::cout << vector[i] << " ";
-    std::cout << "\n";
-}
+clock_t PmergeMe::getVectorTime() const { return (_vectorTime); }
 
-void printDeque(std::deque<int> &deque, std::string prefix)
-{
-    if (!prefix.empty())
-        std::cout << prefix;
-    for (size_t i = 0; i < deque.size(); i++)
-        std::cout << deque[i] << " ";
-    std::cout << "\n";
-}
+clock_t PmergeMe::getListTime() const { return (_listTime); }
 
-void printList(std::list<int> &list, std::string prefix)
-{
-    if (!prefix.empty())
-        std::cout << prefix;
-    for (std::list<int>::iterator it = list.begin(); it != list.end(); it++)
-        std::cout << *it << " ";
-    std::cout << "\n";
-}
+clock_t PmergeMe::getDequeTime() const { return (_dequeTime); }
 
-void sortRecursiveVector(std::vector<int> &vector)
+/* The Merge-Insertion sort algorithm:
+1) Divide the input into pairs of elements. For each pair put largest in mainChain and smaller in pendants.
+2) Recursively sort the main chain.
+3) Insert the pendants back into the sorted main chain in the order defined by the Jacobsthal sequence, 
+which minimises the number of comparisons needed to find their correct position in the sorted main chain. */
+void PmergeMe::sortRecursiveVector(std::vector<int> &vector)
 {
     if (vector.size() <= 1)
         return;
     std::vector<int> mainChain;
     std::vector<int> pendants;
-    for (size_t i = 0; i < vector.size(); i += 2)
+    if (vector.size() % 2 != 0)
+        pendants.push_back(vector.back());
+    for (size_t i = 0; i < vector.size() - 1; i += 2)
     {
-        if (i + 1 < vector.size())
-        {
-            if (vector[i] > vector[i + 1])
-            {   mainChain.push_back(vector[i]);
-                pendants.push_back(vector[i + 1]);
-            }
-            else
-            {
-                mainChain.push_back(vector[i + 1]);
-                pendants.push_back(vector[i]);
-            }
+        if (vector[i] > vector[i + 1])
+        {   mainChain.push_back(vector[i]);
+            pendants.push_back(vector[i + 1]);
         }
         else
         {
+            mainChain.push_back(vector[i + 1]);
             pendants.push_back(vector[i]);
         }
     }
     if (mainChain.size() > 1)
         sortRecursiveVector(mainChain);
-    for (size_t i = 0; i < pendants.size(); i++)
-    {
-        std::vector<int>::iterator it = std::lower_bound(mainChain.begin(), mainChain.end(), pendants[i]);
-        mainChain.insert(it, pendants[i]);
-    }
+    std::vector<size_t> order;
+    insertPendants(mainChain, pendants, order, _jacobsthal);
     vector = mainChain;
 }
 
-void sortRecursiveDeque(std::deque<int> &deque)
+void PmergeMe::sortRecursiveDeque(std::deque<int> &deque)
 {
     if (deque.size() <= 1)
         return;
     std::deque<int> mainChain;
     std::deque<int> pendants;
-    for (size_t i = 0; i < deque.size(); i += 2)
+    if (deque.size() % 2 != 0)
+        pendants.push_back(deque.back());
+    for (size_t i = 0; i < deque.size() - 1; i += 2)
     {
-        if (i + 1 < deque.size())
-        {
-            if (deque[i] > deque[i + 1])
-            {   mainChain.push_back(deque[i]);
-                pendants.push_back(deque[i + 1]);
-            }
-            else
-            {
-                mainChain.push_back(deque[i + 1]);
-                pendants.push_back(deque[i]);
-            }
+        if (deque[i] > deque[i + 1])
+        {   mainChain.push_back(deque[i]);
+            pendants.push_back(deque[i + 1]);
         }
         else
         {
+            mainChain.push_back(deque[i + 1]);
             pendants.push_back(deque[i]);
         }
     }
     if (mainChain.size() > 1)
         sortRecursiveDeque(mainChain);
-    for (size_t i = 0; i < pendants.size(); i++)
-    {
-        std::deque<int>::iterator it = std::lower_bound(mainChain.begin(), mainChain.end(), pendants[i]);
-        mainChain.insert(it, pendants[i]);
-    }
+    std::deque<size_t> order;
+    insertPendants(mainChain, pendants, order, _jacobsthalDeque);
     deque = mainChain;
 }
 
-void sortRecursiveList(std::list<int> &list)
+//linear search for the correct position to insert the pendant in the sorted main chain,
+//since std::list does not support random access iterators required for std::lower_bound
+static std::list<int>::iterator lower_bound_list(std::list<int>::iterator first, std::list<int>::iterator last, int value)
 {
-    if (list.size() <= 1)
-        return;
+    while (first != last)
+    {
+        if (*first >= value)
+            return first;
+        ++first;
+    }
+    return (last);
+}
+
+//Simplified version of the merge-insertion sort for std::list, without using the Jacobsthal sequence for insertion order
+void PmergeMe::sortRecursiveList(std::list<int> &list)
+{
     std::list<int> mainChain;
     std::list<int> pendants;
-    for (std::list<int>::iterator it = list.begin(); it != list.end(); )
+    std::list<int>::iterator it = list.begin();
+    while (it != list.end())
     {
         std::list<int>::iterator next = std::next(it);
-        if (next != list.end())
-        {
-            if (*it > *next)
-            {   mainChain.push_back(*it);
-                pendants.push_back(*next);
-            }
-            else
-            {
-                mainChain.push_back(*next);
-                pendants.push_back(*it);
-            }
-            it = std::next(next);
-        }
-        else
+        if (next == list.end())
         {
             pendants.push_back(*it);
             break;
         }
+        if (*it > *next)
+        {   
+            mainChain.push_back(*it);
+            pendants.push_back(*next);
+        }
+        else
+        {
+            mainChain.push_back(*next);
+            pendants.push_back(*it);
+        }
+        it = std::next(next);
     }
     if (mainChain.size() > 1)
         sortRecursiveList(mainChain);
     for (std::list<int>::iterator it = pendants.begin(); it != pendants.end(); it++)
     {
-        std::list<int>::iterator insertIt = std::lower_bound(mainChain.begin(), mainChain.end(), *it);
+        std::list<int>::iterator insertIt = lower_bound_list(mainChain.begin(), mainChain.end(), *it);
         mainChain.insert(insertIt, *it);
     }
     list = mainChain;
 }
 
+void PmergeMe::printResults()
+{
+    if (!_processed)
+    {
+        print_container(_vector, "Unsorted numbers: ");
+        std::cout << "Call processInput() to sort\n";
+        return ;
+    }
+    if (TEST_MODE)
+        printResultsDetailed();
+    else
+        printResultsSimple();
+}
+
+void PmergeMe::printResultsDetailed()
+{
+    if (_vector.size() <= MAX_PRINT_SIZE)
+    {
+        print_container(_vector, "Original vector: ");
+        print_container(_sortedVector, "Sorted vector: ");
+        print_container(_deque, "Original deque: ");
+        print_container(_sortedDeque, "Sorted deque: ");
+        print_container(_list, "Original list: ");
+        print_container(_sortedList, "Sorted list: ");
+        std::cout << "\n";
+    }
+    std::cout << "Vector (size=" << _vector.size() << ")\n";
+    std::cout << "Is sorted? " << (isSorted(_sortedVector) ? "YES" : "NO") << "\n";
+    std::cout << "Time taken to sort vector: " << _vectorTime << " clock ticks\n\n";
+    std::cout << "Deque of (size=" << _deque.size() << ")\n";
+    std::cout << "Is sorted? " << (isSorted(_sortedDeque) ? "YES" : "NO") << "\n";
+    std::cout << "Time taken to sort deque: " << _dequeTime << " clock ticks\n\n";
+    std::cout << "List (size=" << _list.size() << ")\n";
+    std::cout << "Is sorted? " << (isSorted(_sortedList) ? "YES" : "NO") << "\n";
+    std::cout << "Time taken to sort list: " << _listTime << " clock ticks\n";
+}
+
+void PmergeMe::printResultsSimple()
+{
+    print_container(_vector, "Before: ");
+    print_container(_sortedVector, "After: ");
+    double vectorTimeMicro = static_cast<double>(_vectorTime) / CLOCKS_PER_SEC * 100000;
+    double dequeTimeMicro = static_cast<double>(_dequeTime) / CLOCKS_PER_SEC * 100000;
+    std::cout << "Time to process a range of " << _vector.size()
+              << " elements with std::vector : " << _vectorTime << " clock ticks "
+              << "(" << std::fixed << std::setprecision(5) << vectorTimeMicro << " us)\n";
+    std::cout << "Time to process a range of " << _deque.size()
+              << " elements with std::deque : " << _dequeTime << " clock ticks "
+              << "(" << std::fixed << std::setprecision(5) << dequeTimeMicro << " us)\n";}
+
+// Process the input data, sort it using the merge-insertion sort algorithm, and measure the time taken for each container type. 
+// The sorted results are stored in separate member variables to allow for comparison and verification of correctness.
+// Can be sorted with template version or with specific implementations for each container type, depending on the value of USE_GENERIC macro.
 void PmergeMe::processInput()
 {
-    
-    _sortedVector = _vector;
-    clock_t start = clock();
-    sortRecursiveVector(_sortedVector);
-    clock_t end = clock();
-    double elapsed = double(end - start);
-    print_container(_vector, "Original vector");
-    // printVector(_vector, "Original vector: ");
-    // printVector(_sortedVector, "Sorted vector: ");
-    std::cout << "Is sorted?: " << (isSorted(_sortedVector) ? "Yes" : "No") << "\n";
-    std::cout << "Time taken to sort vector: " << elapsed << " clock ticks\n";
-
     _sortedDeque = _deque;
-    start = clock();
-    sortRecursiveDeque(_sortedDeque);
-    end = clock();
-    elapsed = double(end - start);
-    // printDeque(_deque, "Original deque: ");
-    // printDeque(_sortedDeque, "Sorted deque: ");
-    std::cout << "Is sorted?: " << (isSorted(_sortedDeque) ? "Yes" : "No") << "\n";
-    std::cout << "Time taken to sort deque: " << elapsed << " clock ticks\n";
-
     _sortedList = _list;
-    start = clock();
+    if (USE_GENERIC)
+    {
+        processInput_alt(_vector, _sortedVector, _vectorTime);
+        processInput_alt(_deque, _sortedDeque, _dequeTime);
+    }  
+    else
+    {
+        clock_t start = clock();
+        _sortedVector = _vector;
+        buildJacobsthal(_size, _jacobsthal);
+        sortRecursiveVector(_sortedVector);
+        clock_t end = clock();
+        _vectorTime = end - start;
+        start = clock();
+        _sortedDeque = _deque;
+        buildJacobsthal(_size, _jacobsthalDeque);
+        sortRecursiveDeque(_sortedDeque);
+        end = clock();
+        _dequeTime = end - start;
+    }
+    clock_t start = clock();
+    _sortedList = _list;
     sortRecursiveList(_sortedList);
-    end = clock();
-    elapsed = double(end - start);
-    // printList(_list, "Original list: ");
-    // printList(_sortedList, "Sorted list: ");
-    std::cout << "Is sorted?: " << (isSorted(_sortedList) ? "Yes" : "No") << "\n";
-    std::cout << "Time taken to sort list: " << elapsed << " clock ticks\n";
-
+    clock_t end = clock();
+    _listTime = end - start;
+    _processed = true;
 }
-
-template <typename T>
-bool PmergeMe::isSorted(const T& container)
-{
-    return (std::is_sorted(container.begin(), container.end()));
-}
-
