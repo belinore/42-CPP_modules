@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   PmergeMe.hpp                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/22 15:57:36 by belinore          #+#    #+#             */
+/*   Updated: 2026/04/22 15:58:34 by belinore         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PMERGEME_HPP
 # define PMERGEME_HPP
 
@@ -60,8 +72,9 @@ class PmergeMe
     void printResults();
 };
 
-//Generic version of the merge insertion sort algorithm, works with vector and deque but not list 
-//because it does not support random access operations. Used when USE_GENERIC is set to 1
+//Generic version of the merge insertion sort algorithm, works with vector and deque
+//but not list because it does not support random access operations. 
+//Used when USE_GENERIC is set to 1
 template <typename T>
 void PmergeMe::sortRecursive(T &container)
 {
