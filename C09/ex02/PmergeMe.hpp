@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 15:57:36 by belinore          #+#    #+#             */
-/*   Updated: 2026/04/23 14:12:35 by belinore         ###   ########.fr       */
+/*   Updated: 2026/04/23 19:35:59 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,9 +166,21 @@ void PmergeMe::processInput_alt(T &unsorted, T &container, clock_t &time)
 }
 
 template <typename T>
-bool isSorted(const T& container)
+bool isSorted(const T &container)
 {
-    return (std::is_sorted(container.begin(), container.end()));
+    typename T::const_iterator it = container.begin();
+    typename T::const_iterator next = it;
+    if (it == container.end())
+        return (true);
+    next++;
+    while (next != container.end())
+    {
+        if (*it > *next)
+            return (false);
+        it++;
+        next++;
+    }
+    return (true);
 }
 
 template <typename T>

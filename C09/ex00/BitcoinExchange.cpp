@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:39:40 by belinore          #+#    #+#             */
-/*   Updated: 2026/04/22 16:39:41 by belinore         ###   ########.fr       */
+/*   Updated: 2026/04/23 19:58:04 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,7 @@ BitcoinExchange::BitcoinExchange(std::string inputFile) : _inputFile(inputFile)
             _exchangeRates[date] = rate;
         else if (!line.empty())
             throw std::runtime_error("invalid data.csv format");
-    }
-    std::cout << "Loaded : " << _exchangeRates.size() << " exchange rates from data.csv\n";
-    //print_map(_exchangeRates, "Exchange rates:");
-    // while (std::getline(data, line))
-    // {
-    //     size_t sep = line.find(',');
-    //     if (sep != std::string::npos)
-    //     {
-    //         std::string date = line.substr(0, sep);
-    //         float rate = std::stof(line.substr(sep + 1));
-    //         _exchangeRates[date] = rate;
-    //     }
-    //     else if (!line.empty())
-    //         throw std::runtime_error("Error: invalid data.csv format");
-    // }
+    } 
 }
 
 BitcoinExchange::~BitcoinExchange() {}
@@ -90,41 +76,37 @@ static int strtoi(const std::string &nbr)
     return (value);
 }
 
-static bool isValidDate(const std::string &date)
+static void validateDate(const std::string &date, const std::string &line)
 {
     if ((date.size() != 10 && !(date.size() == 11 && date[10] == ' '))
         || date[4] != '-' || date[7] != '-')
-        return (false);
-    try
-    {
-        long year = strtoi(date.substr(0, 4).c_str());
-        long month = strtoi(date.substr(5, 2).c_str());
-        long day = strtoi(date.substr(8, 2).c_str());
-        if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30)
-        return (false);
-        if (month == 2)
-        {  
-            bool isLeap = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
-            if (day > (isLeap ? 29 : 28))
-            return (false);
-        }
-    }
-    catch(const std::exception& e)
-    {
-        return (false);
-    }
-    return (true);
+        throw std::runtime_error("bad input => " + line);
+    long year = strtoi(date.substr(0, 4).c_str());
+    long month = strtoi(date.substr(5, 2).c_str());
+    long day = strtoi(date.substr(8, 2).c_str());
+    if (year > MAX_YEAR)
+        throw std::runtime_error("bad input => " + line);
+    if (day > 31)
+        throw std::runtime_error("bad input => " + line);
+    if (month == 2 && day > 29)
+        throw std::runtime_error("bad input => " + line);
+    if ((month == 4 || month == 6 || month == 9 || month == 11) && day > 30)
+        throw std::runtime_error("bad input => " + line);
 }
 
-float BitcoinExchange::getExchangeRate(const std::string &date)
+void BitcoinExchange::printExchangeResult(const std::string &date, float value)
 {
     std::map<std::string, float>::iterator it = _exchangeRates.lower_bound(date);
     if (it == _exchangeRates.begin() && it->first > date)
         throw std::runtime_error("no exchange rate available for date " + date);
     else if (it == _exchangeRates.end() || it->first != date)
         it--;
-    return (it->second);
-    //std::cout << "Using exchange rate from " << it->first << ": " << std::setprecision(2) << std::fixed << it->second << "\n";
+    float rate = it->second;
+    std::cout << date << " => " << value << " = " << std::setprecision(2)
+              << std::fixed << value * rate << "\n";
+    if (date > _exchangeRates.rbegin()->first)
+        std::cout << "Warning: used last available exchange rate in database : " 
+                  << _exchangeRates.rbegin()->first << '\n';
 }
 
 static void parseLine(const std::string &line, std::string &date, float &value)
@@ -133,8 +115,7 @@ static void parseLine(const std::string &line, std::string &date, float &value)
     if (!(std::getline(ss, date, '|')))
         throw std::runtime_error("bad input => " + line);
     date.erase(date.find_last_not_of(" \t") + 1);
-    if (!isValidDate(date))
-        throw std::runtime_error("bad input => " + line);
+    validateDate(date, line);
     std::string nbr;
     char *end;
     if (!(std::getline(ss, nbr)))
@@ -167,8 +148,7 @@ void BitcoinExchange::processInput()
                 throw std::out_of_range("not a positive number");
             if (value > 1000)
                 throw std::out_of_range("number too large");
-            float rate = getExchangeRate(date);
-            std::cout << date << " => " << value << " = " << value * rate << "\n";
+            printExchangeResult(date, value);
         }
         catch(const std::exception& e)
         {

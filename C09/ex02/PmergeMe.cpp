@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 15:59:27 by belinore          #+#    #+#             */
-/*   Updated: 2026/04/22 15:59:28 by belinore         ###   ########.fr       */
+/*   Updated: 2026/04/23 19:35:12 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,31 @@
 #include <ctime>
 #include <iomanip>
 
+static void validateArg(const std::string &arg)
+{
+    if (arg.empty())
+        throw std::invalid_argument("Empty arguments are not allowed");
+    
+    for (size_t i = 0; i < arg.size(); i++)
+    {
+        if (!std::isdigit(arg[i]))
+            throw std::invalid_argument("Only positive integers accepted (1 per arg)");
+    }
+}
+
 PmergeMe::PmergeMe(int argc, char **argv) : _processed(false)
 {
     if (!argv || argc < 1)
-        throw std::invalid_argument("Invalid parameters passed to PmergeMe constructor");
+        throw std::invalid_argument(
+            "Invalid parameters passed to PmergeMe constructor");
     for (int i = 1; i < argc; i++)
     {
         std::string arg(argv[i]);
-        if (arg.empty())
-            throw std::invalid_argument("Empty arguments are not allowed");
+        validateArg(arg);
         int num = std::atoi(argv[i]);
         if (num < 0)
-            throw std::invalid_argument("Negative numbers are not allowed: " + std::string(argv[i]));
+            throw std::invalid_argument("Negative numbers are not allowed: "
+                + std::string(argv[i]));
         _vector.push_back(num);
         _list.push_back(num);
         _deque.push_back(num);
@@ -101,10 +114,12 @@ clock_t PmergeMe::getListTime() const { return (_listTime); }
 clock_t PmergeMe::getDequeTime() const { return (_dequeTime); }
 
 /* The Merge-Insertion sort algorithm:
-1) Divide the input into pairs of elements. For each pair put largest in mainChain and smaller in pendants.
+1) Divide the input into pairs of elements. 
+   For each pair put largest in mainChain and smaller in pendants.
 2) Recursively sort the main chain.
-3) Insert the pendants back into the sorted main chain in the order defined by the Jacobsthal sequence, 
-which minimises the number of comparisons needed to find their correct position in the sorted main chain. */
+3) Insert the pendants back into the sorted main chain in the order
+   defined by the Jacobsthal sequence, which minimises the number of comparisons 
+   needed to find their correct position in the sorted main chain. */
 void PmergeMe::sortRecursiveVector(std::vector<int> &vector)
 {
     if (vector.size() <= 1)
@@ -161,7 +176,8 @@ void PmergeMe::sortRecursiveDeque(std::deque<int> &deque)
 
 //linear search for the correct position to insert the pendant in the sorted main chain,
 //since std::list does not support random access iterators required for std::lower_bound
-static std::list<int>::iterator lower_bound_list(std::list<int>::iterator first, std::list<int>::iterator last, int value)
+static std::list<int>::iterator lower_bound_list(std::list<int>::iterator first, 
+                                                 std::list<int>::iterator last, int value)
 {
     while (first != last)
     {
@@ -180,7 +196,8 @@ void PmergeMe::sortRecursiveList(std::list<int> &list)
     std::list<int>::iterator it = list.begin();
     while (it != list.end())
     {
-        std::list<int>::iterator next = std::next(it);
+        std::list<int>::iterator next = it;
+        next++;
         if (next == list.end())
         {
             pendants.push_back(*it);
@@ -196,7 +213,8 @@ void PmergeMe::sortRecursiveList(std::list<int> &list)
             mainChain.push_back(*next);
             pendants.push_back(*it);
         }
-        it = std::next(next);
+        it = next;
+        it++;
     }
     if (mainChain.size() > 1)
         sortRecursiveList(mainChain);

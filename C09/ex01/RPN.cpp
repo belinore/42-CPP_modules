@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:39:15 by belinore          #+#    #+#             */
-/*   Updated: 2026/04/23 14:12:47 by belinore         ###   ########.fr       */
+/*   Updated: 2026/04/23 18:55:19 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,16 @@ void RPN::processExpression()
         else if ((token == "+" || token == "-" || token == "*" || token == "/"))
         {
             if (stack.size() < 2)
-                throw std::invalid_argument("Invalid expression format: expected at least two numbers before operator " + token);
+                throw std::invalid_argument(
+                    "Invalid expression format: expected at least two numbers before operator "
+                    + token);
             evaluate(stack, token[0]);
         }
         else
             throw std::invalid_argument("Invalid token in expression: " + token);
     }
     if (stack.size() != 1)
-        throw std::invalid_argument("Invalid expression format: expected one result, got " + std::to_string(stack.size()));
+        throw std::invalid_argument("Invalid expression format: expected one result only");
     std::cout << stack.top() << "\n";
 }
 
