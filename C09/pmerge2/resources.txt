@@ -1,3 +1,4 @@
 https://github.com/alx-sch/CPP_Glossary?tab=readme-ov-file#ford-johnson-algorithm
 https://medium.com/@mohammad.ali.ibrahim.525/ford-johnson-algorithm-merge-insertion-4b024f0c3d42
-
+https://www.tldraw.com/v/y9Y2Et7vl18fkPZT4UoEKTW?d=v-1742.1919.5468.2455.jEhR30akJPWN_ZhTL5KgI
+number of comparisons stays within Knuth's theoretical bounds
