@@ -1,214 +1,227 @@
+#include "PmergeMe.hpp"
+#include <stdexcept>
+#include <cstdlib>
 #include <algorithm>
-#include <vector>
-#include <cstddef>
+#include <iostream>
+#include <algorithm>
+#include <ctime>
+#include <iomanip>
 
-class PmergeMe
+
+static void validateArg(const std::string &arg)
 {
-public:
-    void sortRecursiveVector(std::vector<int> &vec);
-
-private:
-    struct Item
+    if (arg.empty())
+        throw std::invalid_argument("Empty arguments are not allowed");
+    
+    for (size_t i = 0; i < arg.size(); i++)
     {
-        int         value;
-        std::size_t  id;
-    };
-
-    struct PairInfo
-    {
-        Item        big;
-        Item        small;
-        std::size_t pairId;
-    };
-
-    std::vector<std::size_t> _jacobsthal;
-
-    void buildJacobsthal(std::size_t size);
-    void jacobsthalInsertionOrder(std::size_t size,
-                                  std::vector<std::size_t> &order);
-
-    void sortRecursiveItems(std::vector<Item> &items);
-};
-
-static bool operator<(const PmergeMe::Item &a, const PmergeMe::Item &b)
-{
-    return (a.value < b.value);
-}
-
-void PmergeMe::buildJacobsthal(std::size_t size)
-{
-    _jacobsthal.clear();
-    _jacobsthal.push_back(0);
-    _jacobsthal.push_back(1);
-    while (_jacobsthal.back() < size)
-    {
-        std::size_t next;
-        next = _jacobsthal[_jacobsthal.size() - 1]
-             + 2 * _jacobsthal[_jacobsthal.size() - 2];
-        _jacobsthal.push_back(next);
+        if (!std::isdigit(arg[i]))
+            throw std::invalid_argument("Only positive integers accepted (1 per arg)");
     }
 }
 
-void PmergeMe::jacobsthalInsertionOrder(std::size_t size,
-                                        std::vector<std::size_t> &order)
+PmergeMe::PmergeMe(int argc, char **argv) : _processed(false)
 {
-    std::vector<char> used;
-    std::size_t       prev;
-    std::size_t       i;
-    std::size_t       j;
+    if (!argv || argc < 1)
+        throw std::invalid_argument(
+            "Invalid parameters passed to PmergeMe constructor");
+    for (int i = 1; i < argc; i++)
+    {
+        std::string arg(argv[i]);
+        validateArg(arg);
+        int num = std::atoi(argv[i]);
+        if (num < 0)
+            throw std::invalid_argument("Negative numbers are not allowed: "
+                + std::string(argv[i]));
+        _vector.push_back(num);
+        _list.push_back(num);
+        _deque.push_back(num);
+    }
+    _size = _vector.size();
 
-    order.clear();
+}
+
+PmergeMe::PmergeMe(size_t size) : _processed(false)
+{
     if (size == 0)
-        return;
-    used.assign(size, 0);
-    prev = 0;
-    i = 1;
-    while (prev < size)
+        throw std::invalid_argument("Size must be greater than 0");
+    for (size_t i = 0; i < size; i++)
     {
-        j = _jacobsthal[i];
-        if (j > size)
-            j = size;
-        while (j > prev)
-        {
-            if (!used[j - 1])
-            {
-                order.push_back(j - 1);
-                used[j - 1] = 1;
-            }
-            --j;
-        }
-        prev = _jacobsthal[i];
-        if (prev > size)
-            prev = size;
-        ++i;
+        int num = rand() % RANDOM_MAX;
+        _vector.push_back(num);
+        _list.push_back(num);
+        _deque.push_back(num);
+    }
+    _size = size;
+}
+
+PmergeMe::~PmergeMe() {}
+
+PmergeMe::PmergeMe(const PmergeMe &other)
+: _vector(other._vector), _deque(other._deque), _list(other._list), _jacobsthal(other._jacobsthal)
+, _jacobsthalDeque(other._jacobsthalDeque), _size(other._size), _processed (other._processed)
+{
+    if (other._processed)
+    {
+        _sortedVector = other._sortedVector;
+        _sortedList = other._sortedList;
+        _sortedDeque = other._sortedDeque;
+        _vectorTime = other._vectorTime;
+        _listTime = other._listTime;
+        _dequeTime = other._dequeTime;
     }
 }
 
-void PmergeMe::sortRecursiveItems(std::vector<Item> &items)
+PmergeMe &PmergeMe::operator=(const PmergeMe &other)
 {
-    if (items.size() <= 1)
-        return;
-
-    std::vector<PairInfo>      pairsById;
-    std::vector<Item>          winners;
-    std::vector<Item>          chain;
-    std::vector<std::size_t>   pairOfItemId;
-    std::vector<std::size_t>   bigPos;
-    std::vector<std::size_t>   order;
-    bool                       hasOdd;
-    Item                       odd;
-    std::size_t                i;
-
-    hasOdd = (items.size() % 2 != 0);
-    if (hasOdd)
-        odd = items.back();
-
-    pairsById.reserve(items.size() / 2);
-    winners.reserve(items.size() / 2 + 1);
-    pairOfItemId.assign(items.size(), 0);
-
-    i = 0;
-    while (i + 1 < items.size())
+    if (this != &other)
     {
-        PairInfo p;
-
-        p.pairId = pairsById.size();
-        if (items[i].value >= items[i + 1].value)
+        _vector = other._vector;
+        _deque = other._deque;
+        _list = other._list;
+        _jacobsthal = other._jacobsthal;
+        _jacobsthalDeque = other._jacobsthalDeque;
+        _size = other._size;
+         _processed = other._processed;
+        if (other._processed)
         {
-            p.big = items[i];
-            p.small = items[i + 1];
+            _sortedVector = other._sortedVector;
+            _sortedList = other._sortedList;
+            _sortedDeque = other._sortedDeque;
+            _vectorTime = other._vectorTime;
+            _listTime = other._listTime;
+            _dequeTime = other._dequeTime;
         }
-        else
-        {
-            p.big = items[i + 1];
-            p.small = items[i];
-        }
-        pairsById.push_back(p);
-        winners.push_back(p.big);
-        pairOfItemId[p.big.id] = p.pairId;
-        ++i;
-        ++i;
     }
-
-    if (winners.size() > 1)
-        sortRecursiveItems(winners);
-
-    chain.reserve(items.size());
-    bigPos.resize(pairsById.size());
-    i = 0;
-    while (i < winners.size())
-    {
-        std::size_t pairId;
-
-        pairId = pairOfItemId[winners[i].id];
-        chain.push_back(pairsById[pairId].big);
-        bigPos[i] = i;
-        ++i;
-    }
-
-    buildJacobsthal(pairsById.size());
-    jacobsthalInsertionOrder(pairsById.size(), order);
-
-    i = 0;
-    while (i < order.size())
-    {
-        std::size_t idx;
-        std::vector<Item>::iterator it;
-        std::vector<Item>::iterator end;
-        std::size_t insertPos;
-        std::size_t j;
-
-        idx = order[i];
-        end = chain.begin() + bigPos[idx];
-        it = std::lower_bound(chain.begin(), end, pairsById[idx].small);
-        insertPos = static_cast<std::size_t>(it - chain.begin());
-        chain.insert(it, pairsById[idx].small);
-
-        j = 0;
-        while (j < bigPos.size())
-        {
-            if (bigPos[j] >= insertPos)
-                ++bigPos[j];
-            ++j;
-        }
-        ++i;
-    }
-
-    if (hasOdd)
-    {
-        std::vector<Item>::iterator it;
-
-        it = std::lower_bound(chain.begin(), chain.end(), odd);
-        chain.insert(it, odd);
-    }
-
-    items = chain;
+    return (*this);
 }
 
-void PmergeMe::sortRecursiveVector(std::vector<int> &vec)
+clock_t PmergeMe::getVectorTime() const { return (_vectorTime); }
+
+clock_t PmergeMe::getListTime() const { return (_listTime); }
+
+clock_t PmergeMe::getDequeTime() const { return (_dequeTime); }
+
+/* The Merge-Insertion sort algorithm:
+1) Divide the input into pairs of elements. 
+   For each pair put largest in mainChain and smaller in pendants.
+2) Recursively sort the main chain.
+3) Insert the pendants back into the sorted main chain in the order
+   defined by the Jacobsthal sequence, which minimises the number of comparisons 
+   needed to find their correct position in the sorted main chain. */
+// void PmergeMe::sortRecursiveVector(std::vector<int> &vector)
+// {
+//     if (vector.size() <= 1)
+//         return;
+//     std::vector<int> mainChain;
+//     std::vector<int> pendants;
+//     if (vector.size() % 2 != 0)
+//         pendants.push_back(vector.back());
+//     for (size_t i = 0; i < vector.size() - 1; i += 2)
+//     {
+//         if (vector[i] > vector[i + 1])
+//         {   mainChain.push_back(vector[i]);
+//             pendants.push_back(vector[i + 1]);
+//         }
+//         else
+//         {
+//             mainChain.push_back(vector[i + 1]);
+//             pendants.push_back(vector[i]);
+//         }
+//     }
+//     if (mainChain.size() > 1)
+//         sortRecursiveVector(mainChain);
+//     std::vector<size_t> order;
+//     insertPendants(mainChain, pendants, order, _jacobsthal);
+//     vector = mainChain;
+// }
+
+void PmergeMe::printResults()
 {
-    std::vector<Item> items;
-    std::size_t       i;
-
-    items.reserve(vec.size());
-    i = 0;
-    while (i < vec.size())
+    if (!_processed)
     {
-        Item item;
-
-        item.value = vec[i];
-        item.id = i;
-        items.push_back(item);
-        ++i;
+        print_container(_vector, "Unsorted numbers: ");
+        std::cout << "Call processInput() to sort\n";
+        return ;
     }
+    if (TEST_MODE)
+        printResultsDetailed();
+    else
+        printResultsSimple();
+}
 
-    sortRecursiveItems(items);
-
-    vec.clear();
-    i = 0;
-    while (i < items.size())
+void PmergeMe::printResultsDetailed()
+{
+    if (_vector.size() <= MAX_PRINT_SIZE)
     {
-        vec.push_back(items[i].value);
-        ++i;
+        print_container(_vector, "Original vector: ");
+        print_container(_sortedVector, "Sorted vector: ");
+        // print_container(_deque, "Original deque: ");
+        // print_container(_sortedDeque, "Sorted deque: ");
+        // print_container(_list, "Original list: ");
+        // print_container(_sortedList, "Sorted list: ");
+        std::cout << "\n";
     }
+    std::cout << "Vector (size=" << _vector.size() << ")\n";
+    std::cout << "Is sorted? " << (isSorted(_sortedVector) ? "YES" : "NO") << "\n";
+    std::cout << "Time taken to sort vector: " << _vectorTime << " clock ticks\n";
+    std::cout << "Number of comparisons made to sort vector: " << _comparisonCountVector << "\n\n";
+    // std::cout << "Deque of (size=" << _deque.size() << ")\n";
+    // std::cout << "Is sorted? " << (isSorted(_sortedDeque) ? "YES" : "NO") << "\n";
+    // std::cout << "Time taken to sort deque: " << _dequeTime << " clock ticks\n\n";
+    // std::cout << "List (size=" << _list.size() << ")\n";
+    // std::cout << "Is sorted? " << (isSorted(_sortedList) ? "YES" : "NO") << "\n";
+    // std::cout << "Time taken to sort list: " << _listTime << " clock ticks\n";
+}
+
+void PmergeMe::printResultsSimple()
+{
+    print_container(_vector, "Before: ");
+    print_container(_sortedVector, "After: ");
+    double vectorTimeMicro = static_cast<double>(_vectorTime) / CLOCKS_PER_SEC * 100000;
+    //double dequeTimeMicro = static_cast<double>(_dequeTime) / CLOCKS_PER_SEC * 100000;
+    std::cout << "Time to process a range of " << _vector.size()
+              << " elements with std::vector : " << _vectorTime << " clock ticks "
+              << "(" << std::fixed << std::setprecision(5) << vectorTimeMicro << " us)\n";
+    std::cout << "Number of comparisons made to sort vector: " << _comparisonCountVector << "\n";
+    std::cout << "Is Sorted? " << (isSorted(_sortedVector) ? "YES" : "NO") << "\n";
+    // std::cout << "Time to process a range of " << _deque.size()
+    //           << " elements with std::deque : " << _dequeTime << " clock ticks "
+    //           << "(" << std::fixed << std::setprecision(5) << dequeTimeMicro << " us)\n";
+}
+
+// Process the input data, sort it using the merge-insertion sort algorithm, and measure the time taken for each container type. 
+// The sorted results are stored in separate member variables to allow for comparison and verification of correctness.
+// Can be sorted with template version or with specific implementations for each container type, depending on the value of USE_GENERIC macro.
+void PmergeMe::processInput()
+{
+    _sortedDeque = _deque;
+    _sortedList = _list;
+    // if (USE_GENERIC)
+    // {
+    //     processInput_alt(_vector, _sortedVector, _vectorTime);
+    //     processInput_alt(_deque, _sortedDeque, _dequeTime);
+    // }  
+    // else
+    // {
+    clock_t start = clock();
+    //_sortedVector = _vector;
+    buildJacobsthal(_size, _jacobsthal);
+    _comparisonCountVector = 0;
+    sortVector();
+    clock_t end = clock();
+    _vectorTime = end - start;
+        // start = clock();
+        // _sortedDeque = _deque;
+        // buildJacobsthal(_size, _jacobsthalDeque);
+        // sortRecursiveDeque(_sortedDeque);
+        // end = clock();
+        // _dequeTime = end - start;
+    // }
+    // clock_t start = clock();
+    // _sortedList = _list;
+    // sortRecursiveList(_sortedList);
+    // clock_t end = clock();
+    // _listTime = end - start;
+    _processed = true;
 }

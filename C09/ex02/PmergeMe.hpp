@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 15:57:36 by belinore          #+#    #+#             */
-/*   Updated: 2026/04/23 19:35:59 by belinore         ###   ########.fr       */
+/*   Updated: 2026/05/04 09:53:43 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ class PmergeMe
 
     void printResultsSimple();
     void printResultsDetailed();
-    void sortRecursiveVector(std::vector<int> &vector);
+    
+    void sortVector(std::vector<int> &vector);
+    void sortVectorRecursive(std::vector<std::pair<int,int>> &vector);
+
     void sortRecursiveDeque(std::deque<int> &deque);
     void sortRecursiveList(std::list<int> &list);
     template <typename T>

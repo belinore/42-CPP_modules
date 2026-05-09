@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 15:59:27 by belinore          #+#    #+#             */
-/*   Updated: 2026/04/23 19:35:12 by belinore         ###   ########.fr       */
+/*   Updated: 2026/05/04 10:04:42 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <algorithm>
 #include <ctime>
 #include <iomanip>
+
 
 static void validateArg(const std::string &arg)
 {
@@ -120,17 +121,49 @@ clock_t PmergeMe::getDequeTime() const { return (_dequeTime); }
 3) Insert the pendants back into the sorted main chain in the order
    defined by the Jacobsthal sequence, which minimises the number of comparisons 
    needed to find their correct position in the sorted main chain. */
-void PmergeMe::sortRecursiveVector(std::vector<int> &vector)
+// void PmergeMe::sortRecursiveVector(std::vector<int> &vector)
+// {
+//     if (vector.size() <= 1)
+//         return;
+//     std::vector<int> mainChain;
+//     std::vector<int> pendants;
+//     if (vector.size() % 2 != 0)
+//         pendants.push_back(vector.back());
+//     for (size_t i = 0; i < vector.size() - 1; i += 2)
+//     {
+//         if (vector[i] > vector[i + 1])
+//         {   mainChain.push_back(vector[i]);
+//             pendants.push_back(vector[i + 1]);
+//         }
+//         else
+//         {
+//             mainChain.push_back(vector[i + 1]);
+//             pendants.push_back(vector[i]);
+//         }
+//     }
+//     if (mainChain.size() > 1)
+//         sortRecursiveVector(mainChain);
+//     std::vector<size_t> order;
+//     insertPendants(mainChain, pendants, order, _jacobsthal);
+//     vector = mainChain;
+// }
+
+void PmergeMe::sortVectorRecursive(std::vector<std::pair<int,int>> &vector)
 {
     if (vector.size() <= 1)
         return;
-    std::vector<int> mainChain;
-    std::vector<int> pendants;
+    bool hasStraggler = false;
+    std::pair<int,int> straggler;
     if (vector.size() % 2 != 0)
-        pendants.push_back(vector.back());
-    for (size_t i = 0; i < vector.size() - 1; i += 2)
     {
-        if (vector[i] > vector[i + 1])
+        hasStraggler = true;
+        straggler = vector.back();
+    }
+    std::vector<std::pair<int,int>> mainChain;
+    std::vector<std::pair<int,int>> pendants;
+    for (size_t i = 0; i + 1 < vector.size(); i += 2)
+    {
+        if (vector[i].first > vector[i + 1].first)
         {   mainChain.push_back(vector[i]);
             pendants.push_back(vector[i + 1]);
         }
@@ -140,11 +173,50 @@ void PmergeMe::sortRecursiveVector(std::vector<int> &vector)
             pendants.push_back(vector[i]);
         }
     }
-    if (mainChain.size() > 1)
-        sortRecursiveVector(mainChain);
-    std::vector<size_t> order;
-    insertPendants(mainChain, pendants, order, _jacobsthal);
+    sortVectorRecursive(mainChain);
+    if (hasStraggler)
+        pendants.push_back(straggler);
     vector = mainChain;
+    insertPendants(mainChain, pendants, _jacobsthal);
+    vector = mainChain;
+}
+
+void insert(std::vector<std::pair<int,int>> &mainChain, std::vector<std::pair<int,int>> &pendants, std::vector<size_t> &order)
+{
+    for (size_t i = 0; i < order.size(); i++)
+    {
+        size_t idx = order[i];
+        std::vector<int>::iterator it =
+            std::lower_bound(mainChain.begin(), mainChain.end(), pendants[idx]);
+        mainChain.insert(it, pendants[idx]);
+    }
+}
+
+void PmergeMe::sortVector(std::vector<int> &vector)
+{
+    if (vector.size() <= 1)
+        return;
+    bool hasStraggler = false;
+    std::pair<int,int> straggler;
+    if (vector.size() % 2 != 0)
+    {
+        hasStraggler = true;
+        straggler = std::make_pair(vector.back(), vector.back());
+    }
+    std::vector<std::pair<int,int>> pairs;
+    for (size_t i = 0; i + 1 < vector.size(); i += 2)
+    {
+        if (vector[i] > vector[i + 1])
+            pairs.push_back(std::make_pair(vector[i], vector[i + 1]));
+        else
+            pairs.push_back(std::make_pair(vector[i + 1], vector[i]));
+    }
+    if (pairs.size() > 1)
+        sortVectorRecursive(pairs);
+    std::vector<size_t> order;
+    jacobsthalInsertionOrder(pendants.size(), order, _jacobsthal);
+    insert(pairs, order, _jacobsthal);
+    vector = vectorFromPairs(pairs);
 }
 
 void PmergeMe::sortRecursiveDeque(std::deque<int> &deque)
