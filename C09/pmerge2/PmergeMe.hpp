@@ -13,13 +13,16 @@
 #define CYAN "\033[36m"
 #define RESET "\033[0m"
 
-struct Pair {
-    int winner;
-    int pendant;
-    size_t id;   // THIS is the key
-    size_t id2;
-    size_t index;
+struct Item {
+    int value;
+    size_t id;
 };
+
+struct Pair {
+    Item winner;
+    Item pendant;
+};
+
 
 class PmergeMe
 {
@@ -44,14 +47,18 @@ class PmergeMe
     void printResultsDetailed();
     
     void sortVector();
-    void sortVectorRecursive(std::vector<Pair> &vector);
+    void sortVectorRecursive(std::vector<Item> &vector);
 
     void insertFinal(std::vector<Pair> &pairs, std::vector<size_t> &order);
-    void insertPendants(std::vector<Pair> &mainChain, std::vector<Pair> &pendants, std::vector<size_t> &order, std::vector<Pair> &pairs);
+    void insertPendants(std::vector<Item> &mainChain, std::vector<Item> &pendants, std::vector<size_t> &order, std::vector<Pair> &pairs);
     std::vector<int>::iterator lowerBoundCount(std::vector<int>::iterator begin, 
     std::vector<int>::iterator end, int value);
     std::vector<Pair>::iterator lowerBoundPairs(std::vector<Pair>::iterator begin,
         std::vector<Pair>::iterator end, int value);
+    std::vector<Item>::iterator lowerBoundItems(std::vector<Item>::iterator begin,
+        std::vector<Item>::iterator end, int value);
+    void insertStraggler(std::vector<Item> &mainChain, Item &straggler);
+
     // void sortRecursiveDeque(std::deque<int> &deque);
     // void sortRecursiveList(std::list<int> &list);
     // template <typename T>
@@ -79,9 +86,70 @@ class PmergeMe
 };
 
 //order and jacobsthal will be either std::vector<size_t> or std::deque<size_t>
+// template <typename T>
+// void PmergeMe::jacobsthalInsertionOrder(size_t size, T &order, T &jacobsthal)
+// {
+//     T used(size, 0);
+
+//     size_t prev = 0;
+//     for (size_t i = 1; prev < size; i++)
+//     {
+//         size_t j = jacobsthal[i];
+//         if (j > size)
+//             j = size;
+//         for (size_t x = j; x > prev; x--)
+//         {
+//             if (!used[x - 1])
+//             {
+//                 order.push_back(x - 1);
+//                 used[x - 1] = 1;
+//             }
+//         }
+//         prev = j;
+//     }
+// }
+
+// template <typename T>
+// T insertionOrder(size_t size, T &jacobsthal)
+// {
+//     T order;
+//     T used(size, 0);
+
+//     size_t prev = 0;
+//     for (size_t i = 1; prev < size; i++)
+//     {
+//         size_t j = jacobsthal[i];
+//         if (j > size)
+//             j = size;
+//         for (size_t x = j; x > prev; x--)
+//         {
+//             if (!used[x - 1])
+//             {
+//                 order.push_back(x - 1);
+//                 used[x - 1] = 1;
+//             }
+//         }
+//         prev = j;
+//     }
+//     return (order);
+// }
+
 template <typename T>
-void PmergeMe::jacobsthalInsertionOrder(size_t size, T &order, T &jacobsthal)
+void buildJacobsthal(size_t size, T &j)
 {
+    j.push_back(0);
+    j.push_back(1);
+    while (j.back() < size)
+    {
+        size_t next = j[j.size() - 1] + 2 * j[j.size() - 2];
+        j.push_back(next);
+    }
+}
+
+template <typename T>
+T insertionOrder(size_t size, T &jacobsthal)
+{
+    T order;
     T used(size, 0);
 
     size_t prev = 0;
@@ -100,18 +168,7 @@ void PmergeMe::jacobsthalInsertionOrder(size_t size, T &order, T &jacobsthal)
         }
         prev = j;
     }
-}
-
-template <typename T>
-void buildJacobsthal(size_t size, T &j)
-{
-    j.push_back(0);
-    j.push_back(1);
-    while (j.back() < size)
-    {
-        size_t next = j[j.size() - 1] + 2 * j[j.size() - 2];
-        j.push_back(next);
-    }
+    return (order);
 }
 
 // template <typename T>
@@ -124,6 +181,15 @@ void buildJacobsthal(size_t size, T &j)
 //     clock_t end = clock();
 //     time = end - start;
 // }
+
+template <typename C>
+void makePair(C &pairs, Item winner, Item pendant)
+{
+    Pair pair;
+    pair.winner = winner;
+    pair.pendant = pendant;
+    pairs.push_back(pair);
+}
 
 template <typename T>
 bool isSorted(const T &container)
@@ -152,6 +218,32 @@ void print_container(T &container, std::string prefix)
     for (; it != container.end(); it++)
         std::cout << *it << " ";
     std::cout << "\n";
+}
+
+template <typename C> //C is std::vector<Pair> or std::deque<Pair>.
+void printPairs(const C &pairs, const std::string &prefix)
+{
+    if (!prefix.empty())
+        std::cout << prefix << "\n";
+    for (size_t i = 0; i < pairs.size(); i++)
+    {
+        std::cout << "Pair " << i << ": winner=" << pairs[i].winner.value
+                  << ", id = " << pairs[i].winner.id
+                  << ", pendant=" << pairs[i].pendant.value
+                  << ", id = " << pairs[i].pendant.id << "\n";
+    }
+}
+
+template <typename C> //C is std::vector<Item> or std::deque<Item>.
+void printItems(const C &items, const std::string &prefix)
+{
+    if (!prefix.empty())
+        std::cout << prefix << "\n";
+    for (size_t i = 0; i < items.size(); i++)
+    {
+        std::cout << "Item " << i << ": value=" << items[i].value
+                  << ", id = " << items[i].id << "\n";
+    }
 }
 
 #endif
