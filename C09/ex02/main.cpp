@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 15:59:33 by belinore          #+#    #+#             */
-/*   Updated: 2026/04/22 15:59:33 by belinore         ###   ########.fr       */
+/*   Updated: 2026/05/12 17:12:18 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,47 @@
 #include <sstream>
 #include <algorithm>
 
+void run_single_test(size_t n)
+{
+    std::cout << CYAN << "Testing with " << n << " random numbers" << RESET << "\n";
+    PmergeMe pmergeMe(n);
+    pmergeMe.processInput();
+    pmergeMe.printResults();
+}
+
+void run_test_n_times(size_t n, size_t times)
+{
+    srand(42);
+    std::cout << CYAN << "Testing with " << n << " random numbers " << times << "x" << RESET << "\n";
+    PmergeMe pmergeMe(n);
+    size_t totalVectorTime = 0;
+    size_t totalDequeTime = 0;
+    for (size_t i = 0; i < times; i++)
+    {
+        pmergeMe.processInput(true);
+        pmergeMe.printResultsDetails();
+        totalVectorTime += pmergeMe.getVectorTime();
+        totalDequeTime += pmergeMe.getDequeTime();
+    }
+    size_t averageVectorTime = totalVectorTime / times;
+    size_t averageDequeTime = totalDequeTime / times;
+    std::cout << "Average time to sort " << n << " numbers: Vector -> " << averageVectorTime
+              << " clock ticks, Deque -> " << averageDequeTime << " clock ticks\n\n";
+}
+
 int run_tests()
 {
     int ret = 0;
     try
     {
         srand(42);
-        std::cout << CYAN << "Testing with 19 random numbers" << RESET << "\n";
-        PmergeMe pmergeMe(19);
-        pmergeMe.processInput();
-        pmergeMe.printResults();
-        std::cout << CYAN << "\nTesting with 500 random numbers" << RESET << "\n";
-        PmergeMe pmergeMe1(500);
-        pmergeMe1.processInput();
-        pmergeMe1.printResults();
-        std::cout << CYAN << "\nTesting with 10000 random numbers" << RESET << "\n";
-        PmergeMe pmergeMe2(10000);
-        pmergeMe2.processInput();
-        pmergeMe2.printResults();
-        std::cout << CYAN << "\nTesting with same 10000 numbers 10x" << RESET << "\n";
-        for (size_t i = 0; i < 10; i++)
-        {
-            pmergeMe2.processInput();
-            std::cout << pmergeMe2.getVectorTime() << " clock ticks for vector, " 
-                      << pmergeMe2.getDequeTime() << " clock ticks for deque, "
-                      << pmergeMe2.getListTime() << " clock ticks for list\n";
-        }
+        run_single_test(1);
+        run_single_test(5);
+        run_single_test(19);
+        run_single_test(500);
+        run_single_test(10000);
+        run_test_n_times(12, 5);
+        run_test_n_times(10000, 5);
     }
     catch(const std::exception& e)
     {
