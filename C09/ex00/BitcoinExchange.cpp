@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:39:40 by belinore          #+#    #+#             */
-/*   Updated: 2026/04/23 19:58:04 by belinore         ###   ########.fr       */
+/*   Updated: 2026/05/12 17:39:19 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,11 @@ static void validateDate(const std::string &date, const std::string &line)
     long year = strtoi(date.substr(0, 4).c_str());
     long month = strtoi(date.substr(5, 2).c_str());
     long day = strtoi(date.substr(8, 2).c_str());
-    if (year > MAX_YEAR)
+    if (year > MAX_YEAR || year < MIN_YEAR)
         throw std::runtime_error("bad input => " + line);
-    if (day > 31)
+    if (month < 1 || month > 12)
+        throw std::runtime_error("bad input => " + line);
+    if (day > 31 || day < 1)
         throw std::runtime_error("bad input => " + line);
     if (month == 2 && day > 29)
         throw std::runtime_error("bad input => " + line);

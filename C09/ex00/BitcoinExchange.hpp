@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/22 16:39:35 by belinore          #+#    #+#             */
-/*   Updated: 2026/04/23 18:44:59 by belinore         ###   ########.fr       */
+/*   Updated: 2026/05/12 17:34:49 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <algorithm>
 #include <stdexcept>
 #define MAX_YEAR 2026
+#define MIN_YEAR 2009
 
 class BitcoinExchange
 {

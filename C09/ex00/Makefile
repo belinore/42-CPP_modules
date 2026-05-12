@@ -39,5 +39,5 @@ test_input:
 	@echo "2008-11-30 | 1" >> input.txt
 	@echo "2024-05-02 | 1" >> input.txt
 
-run_test: test_input
+test: test_input
 	./btc input.txt
