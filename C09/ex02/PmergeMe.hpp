@@ -6,7 +6,7 @@
 /*   By: belinore <belinore@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 17:29:53 by belinore          #+#    #+#             */
-/*   Updated: 2026/05/12 17:29:54 by belinore         ###   ########.fr       */
+/*   Updated: 2026/05/13 16:11:40 by belinore         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <ctime>
 
 #define RANDOM_MAX 100
-#define TEST_MODE 0
+#define TEST_MODE 1
 #define MAX_PRINT_SIZE 100
 #define CYAN "\033[36m"
 #define RED "\033[31m"

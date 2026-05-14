@@ -37,7 +37,12 @@ test_input:
 	@echo "2012-01-11 | 2147483648" >> input.txt
 	@echo "2030-01-33 | 1" >> input.txt
 	@echo "2008-11-30 | 1" >> input.txt
-	@echo "2024-05-02 | 1" >> input.txt
+	@echo "2020-02-29 | 1" >> input.txt
+	@echo "2020-02-30 | 1" >> input.txt
+	@echo "2019-02-29 | 1" >> input.txt
+	@echo "2019-02-28 | 1" >> input.txt
+	@echo "202a-05-02 | 1" >> input.txt
+	@echo "2024-00-02 | 1" >> input.txt
 
 test: test_input
 	./btc input.txt
